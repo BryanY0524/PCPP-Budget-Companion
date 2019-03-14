@@ -1,5 +1,6 @@
-import budget
-import pcpp_ScrapeFilter
+import budget_Formula
+import pcpp_Scrape
+import pcpp_Filter
 
 
 def drawline():
@@ -160,8 +161,8 @@ def help_parameter():
 
 
 print("Please wait while the program scrapes the web...")
-MASTER_LIST = pcpp_ScrapeFilter.pcpp_Scrape()
+MASTER_LIST = pcpp_Scrape.update()
 # (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
 pList = (1, 500)  # startMenu()
-compList = budget.calculate_budget(pList[0], pList[1])
-print(pcpp_ScrapeFilter.getCPU(compList, MASTER_LIST[0]))
+compList = budget_Formula.giveFormula(pList[0], pList[1])
+print(pcpp_Filter.getCPU(compList, MASTER_LIST[0]))

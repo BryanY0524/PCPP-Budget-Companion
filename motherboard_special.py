@@ -40,7 +40,8 @@ asrock_intel9 = ['ASRock Z370M-ITX/ac', 'ASRock Z370M Pro4', '	ASRock Z370 Taich
 
 intel_9_base = ['Z390', 'B365']
 
-intel_9_mobo_para = intel_9_base + asus_intel9 + giga_intel9 + msi_intel9 + asrock_intel9
+intel_9_mobo_para = intel_9_base + asus_intel9 + \
+    giga_intel9 + msi_intel9 + asrock_intel9
 
 mobo_dict = []
 for chipset in intel_9_mobo_para:
