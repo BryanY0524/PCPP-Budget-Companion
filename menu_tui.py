@@ -1,3 +1,6 @@
+import budget
+
+
 def drawline():
     '''
     Draws Line
@@ -149,4 +152,6 @@ def help_parameter():
     print(helpDirectory)
 
 
-print(startMenu())
+pList = (1, 500)  # startMenu()
+buildDict = budget.calculate_budget(pList[0], pList[1])
+print(buildDict)
