@@ -71,15 +71,15 @@ def startMenu():
         # Parses and validates user menu option
         try:
             if menuSelect == "1":
-                menu_parameter(1)
+                pList = menu_parameter(1)
                 break
             if menuSelect == "2":
-                menu_parameter(2)
+                pList = menu_parameter(2)
                 break
         except:
             print("***Error: Invalid Option***")
             menuSelect = input("Select an option: ")
-    return
+    return pList
 
 
 def menu_parameter(userOption):
@@ -103,7 +103,6 @@ def menu_parameter(userOption):
         while q1_userOption.lower() != "q":
             try:
                 if int(q1_userOption) > 0 and int(q1_userOption) < 4:
-                    print(q1_userOption, userBudget(int(q1_userOption)))
                     break
                 else:
                     print("***Error: Invalid Option***")
@@ -111,8 +110,7 @@ def menu_parameter(userOption):
             except:
                 print("***Error: Invalid Option***")
                 q1_userOption = input("Please choose an option: ")
-
-    return user_Parameter
+    return (q1_userOption, userBudget(int(q1_userOption)))
 
 
 def userBudget(option):
@@ -148,5 +146,4 @@ def help_parameter():
         helpDirectory.append(textFile.readlines())
     print(helpDirectory)
 
-
-startMenu()
+print(startMenu())
