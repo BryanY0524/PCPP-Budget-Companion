@@ -1,5 +1,5 @@
 import budget
-import pcpart_CPU
+import pcpp_ScrapeFilter
 
 
 def drawline():
@@ -72,6 +72,7 @@ def startMenu():
     print("-" * symbol_Length + "Menu" + "-" * symbol_Length)
     print("---Option 1: Start Creating Desktop with Guided Parameters")
     print("---Option 2: Create Custom Desktop")
+    print("---Enter \"q\" or \"Q\" to quit the program")
     menuSelect = "1"  # input("Select an option: ")
     while str(menuSelect).lower() != "q":
         # Parses and validates user menu option
@@ -158,6 +159,9 @@ def help_parameter():
     print(helpDirectory)
 
 
-pList = (1, 500)  #startMenu()
+print("Please wait while the program scrapes the web...")
+MASTER_LIST = pcpp_ScrapeFilter.pcpp_Scrape()
+# (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
+pList = (1, 500)  # startMenu()
 compList = budget.calculate_budget(pList[0], pList[1])
-print(pcpart_CPU.getCPU(compList))
+print(pcpp_ScrapeFilter.getCPU(compList, MASTER_LIST[0]))
