@@ -3,7 +3,7 @@ import budget
 
 def drawline():
     '''
-    Draws Line
+    Draws Line, used mostly for TUI formatting
     '''
     ln_Symbol = "*"  # Symbol for line drawing
     ln_Length = 134  # Length of symbol drawing
@@ -69,7 +69,7 @@ def startMenu():
     exposition()  # Load Exposition of TUI
     symbol_Length = int(48 / 2)
     print("-" * symbol_Length + "Menu" + "-" * symbol_Length)
-    print("---Option 1: Create Desktop with Guided Parameters")
+    print("---Option 1: Start Creating Desktop with Guided Parameters")
     print("---Option 2: Create Custom Desktop")
     menuSelect = "1"  # input("Select an option: ")
     while str(menuSelect).lower() != "q":
@@ -100,6 +100,7 @@ def menu_parameter(userOption):
         "p3": ["Yes", "No"]  # Option for Overclock enabled CPU
     }
     para_Q = ["What type of desktop do you want?"]
+    returnList = []
     if userOption == 1:
         print(para_Q[0])
         for index, items in enumerate(para_Option["p1"]):
@@ -108,6 +109,10 @@ def menu_parameter(userOption):
         while q1_userOption.lower() != "q":
             try:
                 if int(q1_userOption) > 0 and int(q1_userOption) < 4:
+                    returnList = [
+                        q1_userOption,
+                        userBudget(int(q1_userOption))
+                    ]
                     break
                 else:
                     print("***Error: Invalid Option***")
@@ -115,7 +120,7 @@ def menu_parameter(userOption):
             except:
                 print("***Error: Invalid Option***")
                 q1_userOption = input("Please choose an option: ")
-    return (q1_userOption, userBudget(int(q1_userOption)))
+    return returnList
 
 
 def userBudget(option):
@@ -152,6 +157,6 @@ def help_parameter():
     print(helpDirectory)
 
 
-pList = (1, 500)  # startMenu()
+pList = startMenu()
 buildDict = budget.calculate_budget(pList[0], pList[1])
 print(buildDict)
