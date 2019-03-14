@@ -64,19 +64,18 @@ def startMenu():
     '''
     exposition()
     symbol_Length = int(48 / 2)
-    menuOption = ["1", "2"]
     print("-" * symbol_Length + "Menu" + "-" * symbol_Length)
-    print("Option 1: Create Desktop with Guided Parameters")
-    print("Option 2: Create Custom Desktop")
-    menuSelect = input("Select an option: ")
+    print("---Option 1: Create Desktop with Guided Parameters")
+    print("---Option 2: Create Custom Desktop")
+    menuSelect = "1"  #input("Select an option: ")
     while str(menuSelect).lower() != "q":
         # Parses and validates user menu option
         try:
-            if menuSelect == menuOption[0]:
-                menu_parameter(0)
-                break
-            if menuSelect == menuOption[1]:
+            if menuSelect == "1":
                 menu_parameter(1)
+                break
+            if menuSelect == "2":
+                menu_parameter(2)
                 break
         except:
             print("***Error: Invalid Option***")
@@ -84,29 +83,51 @@ def startMenu():
     return
 
 
-def menu_parameter(userOption, userBudget):
+def menu_parameter(userOption):
     '''
     Filler description
     '''
+    drawline()
     user_Parameter = []
     # menuInput = input("Type q or Q to quit, ? for help")
     para_Option = {
-        "p1": ["Home Office", "Gaming Desktop", "Media Editing Workstation"],
+        "p1": ["General Usage", "Gaming Desktop", "Media Editing Workstation"],
         "p2": ["AMD", "Intel"],  # Brand of CPU
         "p3": ["Yes", "No"]  # Option for Overclock enabled CPU
     }
-    para_Questions = ["Question 1: What type of desktop do you want?"]
-    userBudget = input("To start, please enter your budget: ")
-    while str(userBudget).lower() != "q":
+    para_Q = ["Question 1: What type of desktop do you want?"]
+    if userOption == 1:
+        print(para_Q[0])
+        for index, items in enumerate(para_Option["p1"]):
+            print("---Option", str(index + 1) + ":", items)
+        q1_userOption = input("Please choose an option: ")
+        while q1_userOption.lower() != "q":
+            try:
+                if int(q1_userOption) > 0 and int(q1_userOption) < 4:
+                    print(q1_userOption, userBudget())
+                    break
+                else:
+                    print("***Error: Invalid Option***")
+                    q1_userOption = input("Please choose an option: ")
+            except:
+                print("***Error: Invalid Option***")
+                q1_userOption = input("Please choose an option: ")
+
+    return user_Parameter
+
+
+def userBudget():
+    budget = input("To start, please enter your budget: ")
+    while str(budget).lower() != "q":
         # Parses and validates user budget
         try:
-            userBudget = float(userBudget)
-            print("Budget = $%.2f" % userBudget)
+            budget = float(budget)
+            print("Budget = $%.2f" % budget)
             break
         except:
             print("***Error: Invalid Value***")
-            userBudget = input("To start, please enter your budget: ")
-    return user_Parameter
+            budget = input("To start, please enter your budget: ")
+    return budget
 
 
 def help_parameter():
