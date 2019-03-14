@@ -52,16 +52,18 @@ def exposition():
     drawline()
     print("Welcome to Desktop Builder")
     print("The purpose of this program is to:" +
-          "\n-something\n-something\n-something")
+          "\n---Assist those that are either novices or veterans at computer" +
+          " building and provide useful tools that can be applicable at a" +
+          " lower and higher level of understanding.")
     print("This is why we decided to do this ASDKAJSLDKAJSDLKAJSDLJKASD")
     drawline()
 
 
 def startMenu():
     '''
-    Filler Description
+    Returns parameter list based on user input
     '''
-    exposition()
+    exposition()  # Load Exposition of TUI
     symbol_Length = int(48 / 2)
     print("-" * symbol_Length + "Menu" + "-" * symbol_Length)
     print("---Option 1: Create Desktop with Guided Parameters")
@@ -145,5 +147,6 @@ def help_parameter():
     with open("HELPMENU.txt", "r") as textFile:
         helpDirectory.append(textFile.readlines())
     print(helpDirectory)
+
 
 print(startMenu())
