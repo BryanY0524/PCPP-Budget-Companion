@@ -82,6 +82,7 @@ budget_list = list({
 })
 comp_bud_list = 0
 
+
 def calculate_budget(option, budget):
     typeList = ["gen", "game", "ws"]
     type = typeList[option - 1]

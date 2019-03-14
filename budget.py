@@ -1,6 +1,4 @@
-
 def calculate_budget(option, budget):
-    comp_bud_list = 0
     budget_list = [{
         'name': 'gen1',
         'cpu': 0.35,
@@ -100,23 +98,22 @@ def calculate_budget(option, budget):
 
     if type == 'gen':
         if 751 > budget >= 500:
-            comp_bud_list = budget_list[0]
+            return budget_list[0]
         elif budget > 750:
-            comp_bud_list = budget_list[1]
+            return budget_list[1]
     elif type == 'game':
         if 1001 > budget >= 700:
-            comp_bud_list = budget_list[2]
+            return budget_list[2]
         elif 1501 > budget > 1000:
-            comp_bud_list = budget_list[3]
+            return budget_list[3]
         elif 2001 > budget > 1500:
-            comp_bud_list = budget_list[4]
+            return budget_list[4]
         elif 3001 > budget > 2000:
-            comp_bud_list = budget_list[5]
+            return budget_list[5]
     elif type == 'ws':
         if 1501 > budget >= 1000:
-            comp_bud_list = budget_list[6]
+            return budget_list[6]
         elif 2001 > budget > 1500:
-            comp_bud_list = budget_list[7]
+            return budget_list[7]
         elif 3001 > budget > 2000:
-            comp_bud_list = budget_list[8]
-    return comp_bud_list
+            return budget_list[8]

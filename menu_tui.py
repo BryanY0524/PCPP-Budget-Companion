@@ -1,4 +1,5 @@
 import budget
+import pcpart_CPU
 
 
 def drawline():
@@ -157,6 +158,6 @@ def help_parameter():
     print(helpDirectory)
 
 
-pList = startMenu()
-buildDict = budget.calculate_budget(pList[0], pList[1])
-print(buildDict)
+pList = (1, 500)  #startMenu()
+compList = budget.calculate_budget(pList[0], pList[1])
+print(pcpart_CPU.getCPU(compList))
