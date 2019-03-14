@@ -18,26 +18,37 @@ budget_list = [
     {'name': 'ws3', 'cpu': 0.25, 'motherboard': 0.09, 'memory': 0.12,
      'gpu': 0.28, 'storage': 0.14, 'psu': 0.05, 'case': 0.07}
 ]
-type = 'game'
-budget = 1300
+type = 'ws'
+budget = 3000
 comp_bud_list = 0
 
 for set in budget_list:
     for item in set:
         if set[item] != set['name']:
-            set[item] = set[item] * budget
+            set[item] = round(set[item] * budget, 2)
 
-if type == 'game':
-    if 1500 > budget >1000:
-        comp_bud_list = budget_list[5]
-    elif
-elif type =='gen':
-    if 1500 > budget >1000:
-        comp_bud_list = budget_list[5]
 
+if type =='gen':
+    if 751 > budget >500:
+        comp_bud_list = budget_list[0]
+    elif budget > 750:
+        comp_bud_list = budget_list[1]
+elif type == 'game':
+    if 1001 > budget > 700:
+        comp_bud_list = budget_list[2]
+    elif 1501 > budget > 1000:
+        comp_bud_list = budget_list[3]
+    elif 2001 > budget > 1500:
+        comp_bud_list = budget_list[4]
+    elif 3001 > budget > 2000:
+        comp_bud_list = budget_list[5]
 elif type =='ws':
-    if 1500 > budget >1000:
-        comp_bud_list = budget_list[5]
+    if 1501 > budget > 1000:
+        comp_bud_list = budget_list[6]
+    elif 2001 > budget > 1500:
+        comp_bud_list = budget_list[7]
+    elif 3001 > budget > 2000:
+        comp_bud_list = budget_list[8]
 
 
 print(comp_bud_list)
