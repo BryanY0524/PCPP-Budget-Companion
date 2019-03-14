@@ -1,5 +1,5 @@
 from PCPartPicker_API import pcpartpicker as pcpp
-import csv
+import json
 
 
 def update():
@@ -24,9 +24,21 @@ def update():
         "power-supply")  # Grab PSU Product List
     return (cpuList, mbList, memList, stor_List, gpu_List, case_List, psu_List)
 
-def write_CSV(productLists):
-     
+
+def dump_JSON(productLists):
+    output_path = ".\\INPUTFILES\\"
+    component_set = ("CPU", "MOTHERBOARD", "MEMORY",
+                     "STORAGE", "GPU", "CASE", "PSU")
+    '''with open(output_path + "CPU" + ".json", "w+") as outFile:
+            for rows in productLists:
+                json.dump(rows, outFile)'''
+    
+    for index, components in enumerate(component_set):
+        with open(output_path + components + ".json", "w+") as outFile:
+            for items in productLists[index]:
+                json.dump(items, outFile)
+
 
 if __name__ == "__main__":
     BIGLIST = update()
-    write_CSV(BIGLIST)
+    dump_JSON(BIGLIST)
