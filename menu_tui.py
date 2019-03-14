@@ -2,14 +2,14 @@ def drawline():
     '''
     Draws Line
     '''
-    ln_Symbol = "*"
-    ln_Length = 134
+    ln_Symbol = "*"  # Symbol for line drawing
+    ln_Length = 134  # Length of symbol drawing
     print(ln_Symbol * ln_Length)
 
 
-def projectTitle():
+def exposition():
     '''
-    Prints Project Title
+    Prints exposition of project
     '''
     print(
         " _______                       __          __                      " +
@@ -49,9 +49,7 @@ def projectTitle():
         "                                                             \$$   " +
         "                                                                   ")
     print("\n\nCreated By: Jimmy Ho, Bryan Yuen, Charles Harold Llanto")
-
-
-def exposition():
+    drawline()
     print("Welcome to Desktop Builder")
     print("The purpose of this program is to:" +
           "\n-something\n-something\n-something")
@@ -61,13 +59,14 @@ def exposition():
 
 def startMenu():
     '''
+    Filler Description
     '''
     exposition()
     symbol_Length = int(48 / 2)
     print("-" * symbol_Length + "Menu" + "-" * symbol_Length)
     print("---Option 1: Create Desktop with Guided Parameters")
     print("---Option 2: Create Custom Desktop")
-    menuSelect = "1"  #input("Select an option: ")
+    menuSelect = "1"  # input("Select an option: ")
     while str(menuSelect).lower() != "q":
         # Parses and validates user menu option
         try:
@@ -95,7 +94,7 @@ def menu_parameter(userOption):
         "p2": ["AMD", "Intel"],  # Brand of CPU
         "p3": ["Yes", "No"]  # Option for Overclock enabled CPU
     }
-    para_Q = ["Question 1: What type of desktop do you want?"]
+    para_Q = ["What type of desktop do you want?"]
     if userOption == 1:
         print(para_Q[0])
         for index, items in enumerate(para_Option["p1"]):
@@ -104,7 +103,7 @@ def menu_parameter(userOption):
         while q1_userOption.lower() != "q":
             try:
                 if int(q1_userOption) > 0 and int(q1_userOption) < 4:
-                    print(q1_userOption, userBudget())
+                    print(q1_userOption, userBudget(int(q1_userOption)))
                     break
                 else:
                     print("***Error: Invalid Option***")
@@ -116,17 +115,30 @@ def menu_parameter(userOption):
     return user_Parameter
 
 
-def userBudget():
-    budget = input("To start, please enter your budget: ")
+def userBudget(option):
+    '''
+    Filler Description
+    '''
+    drawline()
+    budgetFloor = [500, 700, 1000]
+    budgetStatus = True
+    budget = input("Enter your budget: ")
     while str(budget).lower() != "q":
         # Parses and validates user budget
+        budget = float(budget)
         try:
-            budget = float(budget)
-            print("Budget = $%.2f" % budget)
+            while budgetStatus:
+                if budget < budgetFloor[option - 1]:
+                    print("Please make sure your input is more than $%.2f" %
+                          budgetFloor[option - 1])
+                    budget = float(input("Enter your budget: "))
+                else:
+                    budgetStatus = False
             break
         except:
             print("***Error: Invalid Value***")
-            budget = input("To start, please enter your budget: ")
+            budget = input("Enter your budget: ")
+    print("Budget = $%.2f" % budget)
     return budget
 
 
@@ -137,8 +149,4 @@ def help_parameter():
     print(helpDirectory)
 
 
-parameter_List = []
-projectTitle()
-drawline()
 startMenu()
-#help_parameter()
