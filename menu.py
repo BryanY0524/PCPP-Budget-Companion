@@ -59,7 +59,7 @@ def exposition():
     drawline()
     print("Welcome to Desktop Builder")
     print("The purpose of this program is to:")
-    print("\---Assist those that are either novices or veterans at computer" +
+    print("---Assist those that are either novices or veterans at computer" +
           " building and provide useful tools that can be applicable at a" +
           " lower and higher level of understanding.")
     print("\nThis is why we decided to do this ASDKAJSLDKAJSDLKAJSDLJKASD")
@@ -90,7 +90,7 @@ def startMenu():
                 print("This will take several minutes...")
                 pcpp_Scrape.update()
             else:
-                raise ValueError("***Error: Option does not exist***")
+                raise ValueError("***Error: Invalid Option***")
         except ValueError as error:
             print(error)
             menuSelect = input("Select an option: ")  # Prompt user for input
@@ -103,33 +103,30 @@ def menu_parameter():
     '''
     drawline()
     user_Parameter = []
-    # menuInput = input("Type q or Q to quit, ? for help")
     para_Option = {
         "p1": ["General Usage", "Gaming Desktop", "Media Editing Workstation"],
         "p2": ["AMD", "Intel"],  # Brand of CPU
         "p3": ["Yes", "No"]  # Option for Overclock enabled CPU
     }
     para_Q = ["What type of desktop do you want?"]
-    returnList = []
     print(para_Q[0])
     for index, items in enumerate(para_Option["p1"]):
         print("---Option", str(index + 1) + ":", items)
-    q1_userOption = input("Please choose an option: ")
-    while q1_userOption.lower() != "q":
+    u_desktopType = input("Please choose an option: ")
+    while u_desktopType.lower() != "q":
         try:
-            if int(q1_userOption) > 0 and int(q1_userOption) < 4:
-                returnList = [
-                    q1_userOption,
-                    userBudget(int(q1_userOption))
+            if int(u_desktopType) > 0 and int(u_desktopType) < 4:
+                user_Parameter = [
+                    u_desktopType,
+                    userBudget(int(u_desktopType))
                 ]
-                return returnList
+                return user_Parameter
                 break
             else:
-                print("***Error: Invalid Option***")
-                q1_userOption = input("Please choose an option: ")
-        except:
-            print("***Error: Invalid Option***")
-            q1_userOption = input("Please choose an option: ")
+                raise ValueError("***Error: Invalid Option***")
+        except ValueError as error:
+            print(error)
+            u_desktopType = input("Please choose an option: ")
     exit()
 
 
