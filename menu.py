@@ -1,6 +1,7 @@
 import budget_Formula
 import pcpp_Scrape
 import pcpp_Filter
+import sys
 
 
 def drawline():
@@ -16,6 +17,7 @@ def exposition():
     '''
     Prints exposition of project
     '''
+    symbol_Length = int(48 / 2)
     print(
         " _______                       __          __                      " +
         "          _______             __  __        __                       "
@@ -56,41 +58,46 @@ def exposition():
     print("\n\nCreated By: Jimmy Ho, Bryan Yuen, Charles Harold Llanto")
     drawline()
     print("Welcome to Desktop Builder")
-    print("The purpose of this program is to:" +
-          "\n---Assist those that are either novices or veterans at computer" +
+    print("The purpose of this program is to:")
+    print("\---Assist those that are either novices or veterans at computer" +
           " building and provide useful tools that can be applicable at a" +
           " lower and higher level of understanding.")
-    print("This is why we decided to do this ASDKAJSLDKAJSDLKAJSDLJKASD")
+    print("\nThis is why we decided to do this ASDKAJSLDKAJSDLKAJSDLJKASD")
     drawline()
+    print("-" * symbol_Length + "Menu" + "-" * symbol_Length)
 
 
 def startMenu():
     '''
-    Returns parameter list based on user input
+    Menu for program, allows user to start program or update/store local files
+    Return:
+    -   User-based parameter List(Desktop Type, User Budget)
     '''
     exposition()  # Load Exposition of TUI
-    symbol_Length = int(48 / 2)
-    print("-" * symbol_Length + "Menu" + "-" * symbol_Length)
+    print("At anytime in the program, enter \"q\" or \"Q\" to quit...")
     print("---Option 1: Start Creating Desktop with Guided Parameters")
-    print("---Option 2: Create Custom Desktop")
-    print("---Enter \"q\" or \"Q\" to quit the program")
-    menuSelect = "1"  # input("Select an option: ")
-    while str(menuSelect).lower() != "q":
-        # Parses and validates user menu option
+    print("---Option 2: Update Local Files")
+    menuSelect = input("Select an option: ")
+    while menuSelect.lower() != "q":
+        # Parses and validates user menu option, entering q quits program
         try:
             if menuSelect == "1":
-                pList = menu_parameter(1)
-                break
-            if menuSelect == "2":
-                pList = menu_parameter(2)
-                break
-        except:
-            print("***Error: Invalid Option***")
-            menuSelect = input("Select an option: ")
-    return pList
+                parameter_List = menu_parameter()  # Gets Parameter List
+                return parameter_List  # Returns Parameter List(type, budget)
+            elif menuSelect == "2":
+                input("Press enter to update...")
+                print("Please wait for program to finish scraping data")
+                print("This will take several minutes...")
+                pcpp_Scrape.update()
+            else:
+                raise ValueError("***Error: Option does not exist***")
+        except ValueError as error:
+            print(error)
+            menuSelect = input("Select an option: ")  # Prompt user for input
+    exit()
 
 
-def menu_parameter(userOption):
+def menu_parameter():
     '''
     Filler description
     '''
@@ -104,26 +111,26 @@ def menu_parameter(userOption):
     }
     para_Q = ["What type of desktop do you want?"]
     returnList = []
-    if userOption == 1:
-        print(para_Q[0])
-        for index, items in enumerate(para_Option["p1"]):
-            print("---Option", str(index + 1) + ":", items)
-        q1_userOption = input("Please choose an option: ")
-        while q1_userOption.lower() != "q":
-            try:
-                if int(q1_userOption) > 0 and int(q1_userOption) < 4:
-                    returnList = [
-                        q1_userOption,
-                        userBudget(int(q1_userOption))
-                    ]
-                    break
-                else:
-                    print("***Error: Invalid Option***")
-                    q1_userOption = input("Please choose an option: ")
-            except:
+    print(para_Q[0])
+    for index, items in enumerate(para_Option["p1"]):
+        print("---Option", str(index + 1) + ":", items)
+    q1_userOption = input("Please choose an option: ")
+    while q1_userOption.lower() != "q":
+        try:
+            if int(q1_userOption) > 0 and int(q1_userOption) < 4:
+                returnList = [
+                    q1_userOption,
+                    userBudget(int(q1_userOption))
+                ]
+                return returnList
+                break
+            else:
                 print("***Error: Invalid Option***")
                 q1_userOption = input("Please choose an option: ")
-    return returnList
+        except:
+            print("***Error: Invalid Option***")
+            q1_userOption = input("Please choose an option: ")
+    exit()
 
 
 def userBudget(option):
@@ -153,6 +160,10 @@ def userBudget(option):
     return budget
 
 
+def exit():
+    sys.exit(0)
+
+
 def help_parameter():
     helpDirectory = []
     with open("HELPMENU.txt", "r") as textFile:
@@ -160,9 +171,8 @@ def help_parameter():
     print(helpDirectory)
 
 
-print("Please wait while the program scrapes the web...")
-MASTER_LIST = pcpp_Scrape.update()
+MASTER_LIST = pcpp_Scrape.read_JSON()
 # (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
-pList = (1, 500)  # startMenu()
-compList = budget_Formula.giveFormula(pList[0], pList[1])
+parameter_List = startMenu()
+compList = budget_Formula.giveFormula(parameter_List[0], parameter_List[1])
 print(pcpp_Filter.getCPU(compList, MASTER_LIST[0]))

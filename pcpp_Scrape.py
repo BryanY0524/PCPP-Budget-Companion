@@ -4,9 +4,10 @@ import json
 
 def update():
     '''
-    Scrapes PCPartPicker product pages
+    Scrapes PCPartPicker product pages and parses data
+    Calls dump_JSON()
     Returns
-        Product List of (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
+    -   Product List of (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
     '''
     pcpp.setRegion("ca")  # Selects Canada Region for PCPartPicker API
     cpuList = pcpp.productLists.getProductList("cpu")  # Grab CPU Product List
@@ -22,23 +23,40 @@ def update():
         "case")  # Grab Case Product List
     psu_List = pcpp.productLists.getProductList(
         "power-supply")  # Grab PSU Product List
-    return (cpuList, mbList, memList, stor_List, gpu_List, case_List, psu_List)
+    dump_JSON(cpuList, mbList, memList, stor_List,
+              gpu_List, case_List, psu_List)
 
 
 def dump_JSON(productLists):
-    output_path = ".\\INPUTFILES\\"
+    '''
+    Take parsed product list from update() and writes to JSON files
+    Arguments
+    -   Set of specified product lists
+    '''
+    path = ".\\INPUTFILES\\"
     component_set = ("CPU", "MOTHERBOARD", "MEMORY",
-                     "STORAGE", "GPU", "CASE", "PSU")
-    '''with open(output_path + "CPU" + ".json", "w+") as outFile:
-            for rows in productLists:
-                json.dump(rows, outFile)'''
-    
+                            "STORAGE", "GPU", "CASE", "PSU")
     for index, components in enumerate(component_set):
-        with open(output_path + components + ".json", "w+") as outFile:
+        with open(path + components + ".json", "w") as outFile:
+            dictList = []
             for items in productLists[index]:
-                json.dump(items, outFile)
+                dictList.append(items)
+            json.dump(dictList, outFile)
+
+
+def read_JSON():
+    '''
+    Reads Component JSON product files
+    '''
+    path = ".\\INPUTFILES\\"
+    component_set = ("CPU", "MOTHERBOARD", "MEMORY",
+                            "STORAGE", "GPU", "CASE", "PSU")
+    MASTER_LIST = []
+    for components in component_set:
+        with open(path + components + ".json", "r") as inputJSON:
+            MASTER_LIST.append(json.load(inputJSON))
+    return MASTER_LIST
 
 
 if __name__ == "__main__":
-    BIGLIST = update()
-    dump_JSON(BIGLIST)
+    update()

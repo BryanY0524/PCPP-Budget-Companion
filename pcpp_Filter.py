@@ -49,3 +49,6 @@ def getCPU(compList, cpu_info):
     chosen_cpu = cpu_set[cpu_p.index(max(cpu_p))]
 
     return chosen_cpu
+
+if __name__ == "__main__":
+    getCPU()
