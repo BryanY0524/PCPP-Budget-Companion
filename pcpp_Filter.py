@@ -150,6 +150,11 @@ def getmobo(compList, mobo_info, chosen_cpu):
             motherboard['price'] = float(
                 motherboard['price'].strip('$'))  # remove dollar sign
 
+    mobo_dict_budget = []
+    for motherboard in mobo_dict:
+        if motherboard['price'] < compList['motherboard']:
+            mobo_dict_budget.append(motherboard)  # alternative list of motherboard, filtered by price
+
     chosen_mobo_set = []
     if 'Intel' in chosen_cpu['name']:
         if 'K' in chosen_cpu['name']:
@@ -168,7 +173,8 @@ def getmobo(compList, mobo_info, chosen_cpu):
         if 'X' in chosen_cpu['name']:
             for motherboard in mobo_dict:
                 if ('X370' in motherboard['name']) \
-                        or ('X470' in motherboard['name']):
+                        or ('X470' in motherboard['name']) \
+                        or ('CROSSHAIR' in motherboard['name']):
                     chosen_mobo_set.append(motherboard)
         else:
             for motherboard in mobo_dict:
@@ -180,6 +186,10 @@ def getmobo(compList, mobo_info, chosen_cpu):
     for motherboard in chosen_mobo_set:
         if motherboard['price'] < compList['motherboard']:
             mobo_set.append(motherboard)  # filter by price
+
+    if mobo_set == []:
+        for motherboard in mobo_dict_budget:
+            mobo_set.append(motherboard)  # use alternative list if the optimal list is empty
 
     mobo_p = []
     for motherboard in mobo_set:

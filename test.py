@@ -1,8 +1,8 @@
 import budget_Formula
 
-compList = budget_Formula.giveFormula(1, 1000)
+compList = budget_Formula.giveFormula(3, 1500)
 print(compList)
-chosen_cpu = {'name': 'Intel Core i5-8600K', 'speed': '3.6 GHz', 'cores': '6', 'tdp': '95 W', 'ratings': '119', 'price': 339.98, 'id': 'Mr2rxr'}
+chosen_cpu = {'name': 'AMD Ryzen 5 2600X', 'speed': '3.6 GHz', 'cores': '6', 'tdp': '95 W', 'ratings': '119', 'price': 349.98, 'id': 'Mr2rxr'}
 mobo_info = [{'name': 'MSI B450 TOMAHAWK', 'socket': 'AM4', 'form-factor': 'ATX', 'ram-slots': '4',
               'max-ram': '64 GB', 'ratings': '23', 'price': '$149.99', 'id': 'Hy97YJ'},
              {'name': 'Asus Prime Z370-A', 'socket': 'LGA1151', 'form-factor': 'ATX',
@@ -1538,14 +1538,23 @@ def getmobo(compList, mobo_info):
     #Filter a list of motherboards that is compatible with the CPU chosen and has a price.
 
     for motherboard in mobo_dict:
-        motherboard['price'] = float(motherboard['price'].strip('$')) #remove dollar sign
+        if type(motherboard['price']) == float:
+            continue
+        else:
+            motherboard['price'] = float(
+                motherboard['price'].strip('$'))  # remove dollar sign
+
+    mobo_dict_budget = []
+    for motherboard in mobo_dict:
+        if motherboard['price'] < compList['motherboard']:
+            mobo_dict_budget.append(motherboard)  # alternative list of motherboard, filtered by price
 
     chosen_mobo_set = []
     if 'Intel' in chosen_cpu['name']:
         if 'K' in chosen_cpu['name']:
             for motherboard in mobo_dict:
                 if ('Z370' in motherboard['name']) \
-                        or ('Z390' in motherboard['name']) \
+                    or ('Z390' in motherboard['name']) \
                         or ('MAXIMUS' in motherboard['name']):
                     chosen_mobo_set.append(motherboard)
         else:
@@ -1562,14 +1571,18 @@ def getmobo(compList, mobo_info):
                     chosen_mobo_set.append(motherboard)
         else:
             for motherboard in mobo_dict:
-                    chosen_mobo_set.append(motherboard)
-    #Filter a list of chosen motherboard in reasonable parameter.
-    #e.g. unlocked intel CPU with overclock enabled motherboard
+                chosen_mobo_set.append(motherboard)
+    # Filter a list of chosen motherboard in reasonable parameter.
+    # e.g. unlocked intel CPU with overclock enabled motherboard
 
     mobo_set = []
     for motherboard in chosen_mobo_set:
         if motherboard['price'] < compList['motherboard']:
-            mobo_set.append(motherboard)#filter by price
+            mobo_set.append(motherboard)  # filter by price
+
+    if mobo_set == []:
+        for motherboard in mobo_dict_budget:
+            mobo_set.append(motherboard)
 
     mobo_p = []
     for motherboard in mobo_set:
