@@ -1576,7 +1576,7 @@ def getmobo(compList, mobo_info):
         mobo_p.append(motherboard['price'])
 
     chosen_motherboard = mobo_set[mobo_p.index(max(mobo_p))]#pick highest value within budget
-
+    print(chosen_cpu)
     print(chosen_motherboard)
     return chosen_motherboard
 
