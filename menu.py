@@ -170,8 +170,13 @@ def help_parameter():
 
 MASTER_LIST = pcpp_Scrape.read_JSON()
 # (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
-parameter_List = startMenu()
-compList = budget_Formula.giveFormula(parameter_List[0], parameter_List[1])
-chosen_cpu = pcpp_Filter.getCPU(compList, MASTER_LIST[0])
-print(chosen_cpu)
-print(pcpp_Filter.getmobo(compList, MASTER_LIST[1], chosen_cpu))
+# parameter_List = startMenu()
+testvalues = [(1, 500), (1, 1000), (2, 700), (2, 1500), (2, 2000),
+              (2, 2500), (2, 3000), (3, 1000), (3, 1500), (3, 3000)]
+for testsubject in testvalues:
+    # parameter_List[0], parameter_List[1])
+    compList = budget_Formula.giveFormula(testsubject[0], testsubject[1])
+    chosen_cpu = pcpp_Filter.getCPU(compList, MASTER_LIST[0])
+    print(testsubject)
+    print(chosen_cpu)
+    print(pcpp_Filter.getmobo(compList, MASTER_LIST[1], chosen_cpu))
