@@ -21,3 +21,7 @@ for ram in filtered_ram_list:
 print(len(ram_info_ca))
 print(len(filtered_ram_list))
 print('Total products removed:', len(ram_info_ca)-len(filtered_ram_list))
+
+print("Total ram pages:", pcpp.productLists.totalPages("memory"))
+for ram in ram_info_ca:
+    print(ram,',')

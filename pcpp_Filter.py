@@ -12,8 +12,8 @@ def getCPU(compList, cpu_info):
     cpu_ex = 'OEM'
     cpu_dict = []
 
-    for model in cpu_para:
-        for cpu in cpu_info:
+    for cpu in cpu_info:
+        for model in cpu_para:
             if model in cpu['name']:
                 if cpu_ex not in cpu['name']:
                     if cpu['price'] != '':
