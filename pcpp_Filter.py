@@ -198,3 +198,96 @@ def getmobo(compList, mobo_info, chosen_cpu):
     # pick highest value within budget
     chosen_motherboard = mobo_set[mobo_p.index(max(mobo_p))]
     return chosen_motherboard
+
+
+def getram(compList, ram_info, chosen_mobo):
+    ram_dict = []
+    for ram in ram_info:
+        if ('288' in ram['type']) \
+                and (ram['price'] != '')\
+                and (ram['cas'] != 'N/A'):
+            ram_dict.append(ram)
+    # filter out DDR4 desktop ram
+
+    for ram in ram_dict:
+        if type(ram['price']) == float:
+            continue
+        else:
+            ram['price'] = float(ram['price'].strip('$'))
+        if type(ram['price/gb']) == float:
+            continue
+        else:
+            ram['price/gb'] = float(ram['price/gb'].strip('$'))
+        ram['speed'] = int(ram['speed'].strip('DDR4-'))
+        if type(ram['cas']) != int:
+            ram['cas'] = int(ram['cas'])
+        ram['size'] = int(ram['size'].strip('GB'))
+    # change price and price/gb to float, and speed,size,cas to int, for easier processing.
+
+    ram_set = []
+    for ram in ram_dict:
+        if ('x4' not in ram['modules']) and \
+                ('8x8' not in ram['modules']) and \
+                ('1x16' not in ram['modules']):
+            if 8 <= ram['size'] <= 64:
+                if ram['price/gb'] < 12.00:
+                    ram_set.append(ram)
+    # filter out ram that is too expensive in terms of price/performance.
+
+    ram_budget_set = []
+    for ram in ram_set:
+        if ram['price'] < compList['memory']:
+            ram_budget_set.append(ram)
+    # filter out all ram that is within budget
+
+    ram_chosen_set = []
+    ram_size_list = [64, 32, 16, 8]
+    for size in ram_size_list:
+        if ram_chosen_set == []:
+            for ram in ram_budget_set:
+                if ram['size'] == size:
+                    ram_chosen_set.append(ram)
+    # filter ram by the maximum capacity available
+
+    ram_count_set = []
+    for ram in ram_chosen_set:
+        if int(ram['modules'][0]) <= int(chosen_mobo['ram-slots']):
+            ram_count_set.append(ram)
+    # filter ram by the maximum ram-slots by the chosen motherboard
+
+    ram_speed_cas_list = []
+    for ram in ram_count_set:
+        ram_speed_cas_list.append(ram['speed'] / ram['cas'])
+    # make a list thats in the same order as ram_count_set, but in terms of speed/cas
+
+    ram_select_set = []
+    for index, speedcas in enumerate(ram_speed_cas_list, 0):
+        if speedcas == max(ram_speed_cas_list):
+            ram_select_set.append(ram_count_set[index])
+    # filter the ram modules with the maximum speed/cas ratio for performance
+
+    ram_speed_list = []
+    for ram in ram_select_set:
+        ram_speed_list.append(ram['speed'])
+    # make a list thats in the same order as ram_select_set, but in terms of ram speed only
+
+    ram_speed_module = []
+    for index, speed in enumerate(ram_speed_list, 0):
+        if speed == max(ram_speed_list):
+            ram_speed_module.append(ram_select_set[index])
+    # filter the ram modules with the maximum speed
+
+    ram_price_list = []
+    for ram in ram_speed_module:
+        ram_price_list.append(ram['price'])
+    # make a list thats in the same order as ram_select_set, but in terms of ram speed only
+
+    ram_price_module = []
+    for index, price in enumerate(ram_price_list, 0):
+        if price == min(ram_price_list):
+            ram_price_module.append(ram_speed_module[index])
+    # filter the ram modules with the minimum price
+
+    chosen_ram = ram_price_module[0]
+
+    return chosen_ram

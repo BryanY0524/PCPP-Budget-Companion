@@ -3409,6 +3409,7 @@ def getram(compList, ram_info, chosen_mobo):
 
     chosen_ram = ram_price_module[0]
 
+    return chosen_ram
 
     print(chosen_ram)
 getram(compList, ram_info, chosen_mobo)

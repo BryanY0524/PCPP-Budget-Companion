@@ -10,11 +10,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/menu.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2822">
-              <caret line="169" selection-start-line="169" selection-end-line="169" />
+            <state relative-caret-position="783">
+              <caret line="186" lean-forward="true" selection-start-line="186" selection-end-line="186" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -23,10 +23,17 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pcpp_Scrape.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-233" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pcpp_Filter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-238">
-              <caret line="22" selection-start-line="22" selection-end-line="25" selection-end-column="57" />
+            <state relative-caret-position="464">
+              <caret line="223" column="50" lean-forward="true" selection-start-line="223" selection-start-column="50" selection-end-line="223" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -49,11 +56,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/INPUTFILES/ram_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1632">
-              <caret line="3407" column="51" selection-start-line="3407" selection-start-column="51" selection-end-line="3407" selection-end-column="51" />
+            <state relative-caret-position="391">
+              <caret line="3334" column="57" lean-forward="true" selection-start-line="3334" selection-start-column="57" selection-end-line="3334" selection-end-column="57" />
               <folding>
                 <element signature="e#301#948313#0" />
               </folding>
@@ -85,9 +92,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/pcpp_Filter.py" />
         <option value="$PROJECT_DIR$/Data_filter/pcpartpicker_ram.py" />
         <option value="$PROJECT_DIR$/INPUTFILES/ram_test.py" />
+        <option value="$PROJECT_DIR$/menu.py" />
+        <option value="$PROJECT_DIR$/pcpp_Filter.py" />
       </list>
     </option>
   </component>
@@ -137,7 +145,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.ram_test">
+  <component name="RunManager" selected="Python.menu">
     <configuration name="menu" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Desktop-Builder" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -245,11 +253,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.menu" />
+        <item itemvalue="Python.pcpp_Filter" />
         <item itemvalue="Python.ram_test" />
         <item itemvalue="Python.pcpartpicker_ram" />
-        <item itemvalue="Python.menu" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.pcpp_Filter" />
       </list>
     </recent_temporary>
   </component>
@@ -275,7 +283,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1682243" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.031152649" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -290,12 +298,24 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/menu.py">
+    <entry file="file://$PROJECT_DIR$/Data_filter/pcpartpicker_ram.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2822">
-          <caret line="169" selection-start-line="169" selection-end-line="169" />
+        <state relative-caret-position="391">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pcpp_Scrape.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-233" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/INPUTFILES/ram_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="3334" column="57" lean-forward="true" selection-start-line="3334" selection-start-column="57" selection-end-line="3334" selection-end-column="57" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#301#948313#0" />
           </folding>
         </state>
       </provider>
@@ -307,26 +327,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Data_filter/pcpartpicker_ram.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pcpp_Filter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="22" selection-start-line="22" selection-end-line="25" selection-end-column="57" />
+        <state relative-caret-position="464">
+          <caret line="223" column="50" lean-forward="true" selection-start-line="223" selection-start-column="50" selection-end-line="223" selection-end-column="50" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/INPUTFILES/ram_test.py">
+    <entry file="file://$PROJECT_DIR$/menu.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="3407" column="51" selection-start-line="3407" selection-start-column="51" selection-end-line="3407" selection-end-column="51" />
+        <state relative-caret-position="783">
+          <caret line="186" lean-forward="true" selection-start-line="186" selection-end-line="186" />
           <folding>
-            <element signature="e#301#948313#0" />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
