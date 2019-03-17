@@ -10,11 +10,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/menu.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="783">
-              <caret line="186" lean-forward="true" selection-start-line="186" selection-end-line="186" />
+            <state relative-caret-position="624">
+              <caret line="187" lean-forward="true" selection-start-line="187" selection-end-line="187" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -22,10 +22,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pcpp_Scrape.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-233" />
+            <state relative-caret-position="-224" />
           </provider>
         </entry>
       </file>
@@ -94,12 +94,12 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/Data_filter/pcpartpicker_ram.py" />
         <option value="$PROJECT_DIR$/INPUTFILES/ram_test.py" />
-        <option value="$PROJECT_DIR$/menu.py" />
         <option value="$PROJECT_DIR$/pcpp_Filter.py" />
+        <option value="$PROJECT_DIR$/menu.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="177" />
     <option name="y" value="79" />
     <option name="width" value="1436" />
@@ -276,14 +276,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18387777" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.031152649" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.19626169" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -303,11 +302,6 @@
         <state relative-caret-position="391">
           <caret line="23" selection-start-line="23" selection-end-line="23" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pcpp_Scrape.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-233" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/INPUTFILES/ram_test.py">
@@ -336,12 +330,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/menu.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="783">
-          <caret line="186" lean-forward="true" selection-start-line="186" selection-end-line="186" />
+        <state relative-caret-position="624">
+          <caret line="187" lean-forward="true" selection-start-line="187" selection-end-line="187" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pcpp_Scrape.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-224" />
       </provider>
     </entry>
   </component>

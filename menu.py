@@ -181,6 +181,7 @@ for testsubject in testvalues:
     chosen_motherboard = pcpp_Filter.getmobo(compList, MASTER_LIST[1], chosen_cpu)
     chosen_ram = pcpp_Filter.getram(compList, MASTER_LIST[2], chosen_motherboard)
     print(testsubject)
+    print(compList)
     print(chosen_cpu)
     print(chosen_motherboard)
     print(chosen_ram)
