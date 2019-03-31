@@ -3413,7 +3413,7 @@ def getram(compList, ram_info, chosen_mobo):
 
     print(chosen_ram)
 getram(compList, ram_info, chosen_mobo)
-
+print(getram(compList, ram_info, chosen_mobo))
 
 
 

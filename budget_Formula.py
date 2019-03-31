@@ -84,10 +84,10 @@ def giveFormula(option, budget):
         'cpu': 0.25,
         'motherboard': 0.09,
         'memory': 0.12,
-        'gpu': 0.28,
-        'storage': 0.14,
+        'gpu': 0.30,
+        'storage': 0.11,
         'psu': 0.05,
-        'case': 0.07
+        'case': 0.08
     })
     typeList = ["gen", "game", "ws"]
     type = typeList[int(option) - 1]

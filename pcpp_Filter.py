@@ -291,3 +291,134 @@ def getram(compList, ram_info, chosen_mobo):
     chosen_ram = ram_price_module[0]
 
     return chosen_ram
+
+
+def getstor(compList, stor_info):
+    stor_dict = []
+    for drives in stor_info:
+        if drives['price'] != '' and drives['price/gb'] != '':
+            stor_dict.append(drives)
+    #remove items with empty price value
+
+    hdd_dict = []
+    ssd_dict = []
+    for drives in stor_dict:
+        if type(drives['price']) == float:
+            continue
+        else:
+            drives['price'] = float(drives['price'].strip('$'))
+        if type(drives['price/gb']) == float:
+            continue
+        else:
+            drives['price/gb'] = float(drives['price/gb'].strip('$'))
+        if drives['capacity'] != '':
+            if 'TB' in drives['capacity']:
+                drives['capacity'] = float(drives['capacity'].strip(' TB'))*1024
+            elif 'GB' in drives['capacity']:
+                drives['capacity'] = float(drives['capacity'].strip(' GB'))
+        if '7200' in drives['type'] or '5400' in drives['type']:
+            hdd_dict.append(drives)
+        elif 'SSD' in drives['type']:
+            ssd_dict.append(drives)
+    #turn price and capacity into float for future comparison, and split into list of SSD and HDD.
+
+
+    ssd_budget_list = []
+    for drives in ssd_dict:
+        if '2280' in drives['form'] and drives['price'] <= compList['storage']:
+            ssd_budget_list.append(drives)
+    #filter specific form factor and SSD within price range
+
+    ssd_comp_type_limit = []
+    if 'ws' in compList['name']:
+        for drives in ssd_budget_list:
+            if drives['capacity'] < 1200:
+                ssd_comp_type_limit.append(drives)
+    else:
+        ssd_comp_type_limit = ssd_budget_list
+    #limit work station to have maximum of 1TB SSD, reserve extra budget for HDD if available
+
+    ssd_cap_list = []
+    for drives in ssd_comp_type_limit:
+        ssd_cap_list.append(drives['capacity'])
+
+    ssd_size_list = []
+    for index, cap in enumerate(ssd_cap_list, 0):
+        if cap > max(ssd_cap_list) * 0.9:
+            ssd_size_list.append(ssd_comp_type_limit[index])
+    #filter SSD to the top 10% of capacity
+
+    ssd_pgb_list = []
+    for drives in ssd_size_list:
+        ssd_pgb_list.append(drives['price/gb'])
+
+    ssd_value_list = []
+    for index, pgb in enumerate(ssd_pgb_list, 0):
+        if pgb < min(ssd_pgb_list)*1.2:
+            ssd_value_list.append(ssd_size_list[index])
+    #filter SSD to the lowest price/gb and within 20% more
+
+    ssd_price_list = []
+    for drives in ssd_value_list:
+        ssd_price_list.append(drives['price'])
+
+    ssd_min_price = []
+    for index, price in enumerate(ssd_price_list, 0):
+        if price == min(ssd_price_list):
+            ssd_min_price.append(ssd_value_list[index])
+
+    chosen_ssd = ssd_min_price[0]
+    #filter a single SSD from filtered set
+
+    #-----------------------SSD SECTION ENDED-------------------------#
+
+    hdd_budget = compList['storage'] - chosen_ssd['price']
+    hdd_brand = ['Western Digital', 'Seagate']
+    hdd_model = ['Barra', 'Blue']
+
+    hdd_budget_list = []
+    for drives in hdd_dict:
+        for brand in hdd_brand:
+            if brand in drives['name']:
+                for model in hdd_model:
+                    if model in drives['series']:
+                        if drives['price'] <= hdd_budget and drives['form'] == '3.5"':
+                            hdd_budget_list.append(drives)
+    #filter specific form factor and models of HDD within price range
+
+    hdd_cap_list = []
+    for drives in hdd_budget_list:
+        hdd_cap_list.append(drives['capacity'])
+
+    hdd_size_list = []
+    for index, cap in enumerate(hdd_cap_list, 0):
+        if cap > max(hdd_cap_list) * 0.9:
+            hdd_size_list.append(hdd_budget_list[index])
+    # filter HDD to the top 10% of capacity
+
+    hdd_pgb_list = []
+    for drives in hdd_size_list:
+        hdd_pgb_list.append(drives['price/gb'])
+
+    hdd_value_list = []
+    for index, pgb in enumerate(hdd_pgb_list, 0):
+        if pgb < min(hdd_pgb_list) * 1.2:
+            hdd_value_list.append(hdd_size_list[index])
+    # filter HDD to the lowest price/gb and within 20% more
+
+    hdd_price_list = []
+    for drives in hdd_value_list:
+        hdd_price_list.append(drives['price'])
+
+    hdd_min_price = []
+    for index, price in enumerate(hdd_price_list, 0):
+        if price == min(hdd_price_list):
+            hdd_min_price.append(hdd_value_list[index])
+
+    if 'ws' in compList['name']:
+        chosen_hdd = hdd_min_price[0]
+    else:
+        chosen_hdd = 'NONE'
+    # filter a single HDD from filtered set
+
+    return chosen_ssd, chosen_hdd

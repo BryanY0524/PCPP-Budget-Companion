@@ -173,15 +173,19 @@ MASTER_LIST = pcpp_Scrape.read_JSON()
 # (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
 # parameter_List = startMenu()
 testvalues = [(1, 500), (1, 1000), (2, 700), (2, 1500), (2, 2000),
-              (2, 2500), (2, 3000), (3, 1000), (3, 1500), (3, 3000)]
+              (2, 2500), (2, 3000), (3, 1000), (3, 1500), (3, 2000), (3, 3000)]
 for testsubject in testvalues:
     # parameter_List[0], parameter_List[1])
     compList = budget_Formula.giveFormula(testsubject[0], testsubject[1])
     chosen_cpu = pcpp_Filter.getCPU(compList, MASTER_LIST[0])
     chosen_motherboard = pcpp_Filter.getmobo(compList, MASTER_LIST[1], chosen_cpu)
     chosen_ram = pcpp_Filter.getram(compList, MASTER_LIST[2], chosen_motherboard)
+    chosen_ssd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[0]
+    chosen_hdd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[1]
     print(testsubject)
     print(compList)
     print(chosen_cpu)
     print(chosen_motherboard)
     print(chosen_ram)
+    print(chosen_ssd)
+    print(chosen_hdd)
