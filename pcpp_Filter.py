@@ -298,7 +298,7 @@ def getstor(compList, stor_info):
     for drives in stor_info:
         if drives['price'] != '' and drives['price/gb'] != '':
             stor_dict.append(drives)
-    #remove items with empty price value
+    # remove items with empty price value
 
     hdd_dict = []
     ssd_dict = []
@@ -316,18 +316,19 @@ def getstor(compList, stor_info):
                 drives['capacity'] = float(drives['capacity'].strip(' TB'))*1024
             elif 'GB' in drives['capacity']:
                 drives['capacity'] = float(drives['capacity'].strip(' GB'))
+
+    for drives in stor_dict:
         if '7200' in drives['type'] or '5400' in drives['type']:
             hdd_dict.append(drives)
-        elif 'SSD' in drives['type']:
+        elif 'SSD' == drives['type']:
             ssd_dict.append(drives)
-    #turn price and capacity into float for future comparison, and split into list of SSD and HDD.
-
+    # turn price and capacity into float for future comparison, and split into list of SSD and HDD.
 
     ssd_budget_list = []
     for drives in ssd_dict:
-        if '2280' in drives['form'] and drives['price'] <= compList['storage']:
+        if 'M.2-2280' == drives['form'] and drives['price'] <= compList['storage']:
             ssd_budget_list.append(drives)
-    #filter specific form factor and SSD within price range
+    # filter specific form factor and SSD within price range
 
     ssd_comp_type_limit = []
     if 'ws' in compList['name']:
@@ -336,7 +337,7 @@ def getstor(compList, stor_info):
                 ssd_comp_type_limit.append(drives)
     else:
         ssd_comp_type_limit = ssd_budget_list
-    #limit work station to have maximum of 1TB SSD, reserve extra budget for HDD if available
+    # limit work station to have maximum of 1TB SSD, reserve extra budget for HDD if available
 
     ssd_cap_list = []
     for drives in ssd_comp_type_limit:
@@ -346,7 +347,7 @@ def getstor(compList, stor_info):
     for index, cap in enumerate(ssd_cap_list, 0):
         if cap > max(ssd_cap_list) * 0.9:
             ssd_size_list.append(ssd_comp_type_limit[index])
-    #filter SSD to the top 10% of capacity
+    # filter SSD to the top 10% of capacity
 
     ssd_pgb_list = []
     for drives in ssd_size_list:
@@ -356,7 +357,7 @@ def getstor(compList, stor_info):
     for index, pgb in enumerate(ssd_pgb_list, 0):
         if pgb < min(ssd_pgb_list)*1.2:
             ssd_value_list.append(ssd_size_list[index])
-    #filter SSD to the lowest price/gb and within 20% more
+    # filter SSD to the lowest price/gb and within 20% more
 
     ssd_price_list = []
     for drives in ssd_value_list:
@@ -367,12 +368,12 @@ def getstor(compList, stor_info):
         if price == min(ssd_price_list):
             ssd_min_price.append(ssd_value_list[index])
 
-    chosen_ssd = ssd_min_price[0]
-    #filter a single SSD from filtered set
+    selected_ssd = ssd_min_price[0]
+    # filter a single SSD from filtered set
 
-    #-----------------------SSD SECTION ENDED-------------------------#
+    # -----------------------SSD SECTION ENDED-------------------------#
 
-    hdd_budget = compList['storage'] - chosen_ssd['price']
+    hdd_budget = compList['storage'] - selected_ssd['price']
     hdd_brand = ['Western Digital', 'Seagate']
     hdd_model = ['Barra', 'Blue']
 
@@ -384,7 +385,7 @@ def getstor(compList, stor_info):
                     if model in drives['series']:
                         if drives['price'] <= hdd_budget and drives['form'] == '3.5"':
                             hdd_budget_list.append(drives)
-    #filter specific form factor and models of HDD within price range
+    # filter specific form factor and models of HDD within price range
 
     hdd_cap_list = []
     for drives in hdd_budget_list:
@@ -415,10 +416,10 @@ def getstor(compList, stor_info):
         if price == min(hdd_price_list):
             hdd_min_price.append(hdd_value_list[index])
 
-    if 'ws' in compList['name']:
-        chosen_hdd = hdd_min_price[0]
+    if len(hdd_min_price) > 0 and hdd_min_price[0]['capacity'] > 900 and 'ws' in compList['name']:
+        select_hdd = hdd_min_price[0]
     else:
-        chosen_hdd = 'NONE'
+        select_hdd = 'NO HDD'
     # filter a single HDD from filtered set
 
-    return chosen_ssd, chosen_hdd
+    return [selected_ssd, select_hdd]
