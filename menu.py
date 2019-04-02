@@ -75,16 +75,18 @@ def startMenu():
     '''
     exposition()  # Load Exposition of TUI
     print("At anytime in the program, enter \"q\" or \"Q\" to quit...")
-    print("---Option 1: Start Creating Desktop with Guided Parameters")
-    print("---Option 2: Update Local Files")
+    print("---Option 1: Start Creating Custom Desktop with Guided Parameters")
+    print("---Option 2: Create Desktop Based on Type")
+    print("---Option 3: Update Local Files")
     menuSelect = input("Select an option: ")
     while menuSelect.lower() != "q":
         # Parses and validates user menu option, entering q quits program
         try:
             if menuSelect == "1":
-                parameter_List = menu_parameter()  # Gets Parameter List
-                return parameter_List  # Returns Parameter List(type, budget)
+                return menu_parameter(0)  # Returns Parameter List
             elif menuSelect == "2":
+                return menu_parameter(1)  # Returns Parameter List
+            elif menuSelect == "3":
                 input("Press enter to update...")
                 print("Please wait for program to finish scraping data")
                 print("This will take several minutes...")
@@ -97,39 +99,56 @@ def startMenu():
     exit()
 
 
-def menu_parameter():
+def menu_parameter(userOption):
     '''
     Filler description
     '''
     drawline()
-    user_Parameter = []
+    user_Para = []
     para_Option = {
         "p1": ["General Usage", "Gaming Desktop", "Media Editing Workstation"],
-        "p2": ["AMD", "Intel"],  # Brand of CPU
-        "p3": ["Yes", "No"],  # Option for Overclock enabled CPU
-        "p4": ["Micro ATX", "ATX"],  # Size of Motherboard
-        "p5": ["Nvidia", "Radeon", "Integrated"],  # Video Card Parameter
+        "p2": ["AMD", "Intel", "Doesn't Matter"],  # Brand of CPU
+        "p3": ["Yes", "No",
+               "Doesn't Matter"],  # Option for Overclock enabled CPU
+        "p4": ["Micro ATX", "ATX", "Doesn't Matter"],  # Size of Motherboard
+        "p5": ["Nvidia", "Radeon", "Doesn't Matter"],  # Video Card Parameter
     }
-    para_Q = ["What type of desktop do you want?"]
-    print(para_Q[0])
-    for index, items in enumerate(para_Option["p1"]):
-        print("---Option", str(index + 1) + ":", items)
-    u_desktopType = input("Please choose an option: ")
-    while u_desktopType.lower() != "q":
-        try:
-            if int(u_desktopType) > 0 and int(u_desktopType) < 4:
-                user_Parameter = [
-                    u_desktopType,
-                    userBudget(int(u_desktopType))
-                ]
-                return user_Parameter
-                break
-            else:
-                raise ValueError("***Error: Invalid Option***")
-        except ValueError as error:
-            print(error)
-            u_desktopType = input("Please choose an option: ")
-    exit()
+    para_Q = {
+        "Q1": "What type of desktop do you want?",
+        "Q2": "What brand of CPU do you want?",
+        "Q3": "Do you want an Overclock enabled CPU?",
+        "Q4": "What size of motherboard do you want?",
+        "Q5": "What brand of GPU do you want?"
+    }
+    for num in range(1, 7):
+        if num < 6:
+            print(para_Q["Q" + str(num)])
+            for index, items in enumerate(para_Option["p" + str(num)]):
+                print("---Option", str(index + 1) + ":", items)
+            userInput = input("Please choose an option: ")
+        while userInput.lower() != "q":
+            try:
+                if int(userInput) > 0 and int(userInput) < 4:
+                    if userOption == 1:
+                        user_Para = [
+                            userInput,
+                            userBudget(int(userInput)), 3, 3, 3, 3
+                        ]  # 3 is default/doesn't matter
+                        return user_Para
+                    else:
+                        if len(user_Para) < 6:
+                            drawline()
+                            user_Para.append(int(userInput))
+                            if num == 1:
+                                user_Para.append(userBudget(int(userInput)))
+                            break
+                        else:
+                            return user_Para
+                else:
+                    raise ValueError("***Error: Invalid Option***")
+            except ValueError as error:
+                print(error)
+                userInput = input("Please choose an option: ")
 
 
 def userBudget(option):
@@ -137,7 +156,7 @@ def userBudget(option):
     Filler Description
     '''
     drawline()
-    budgetFloor = [500, 700, 1000]
+    budgetFloor = [500, 700, 1000, 0]
     budgetStatus = True
     budget = input("Enter your budget: ")
     while str(budget).lower() != "q":
@@ -159,10 +178,6 @@ def userBudget(option):
     return budget
 
 
-def exit():
-    sys.exit(0)
-
-
 def help_parameter():
     helpDirectory = []
     with open("HELPMENU.txt", "r") as textFile:
@@ -172,23 +187,21 @@ def help_parameter():
 
 MASTER_LIST = pcpp_Scrape.read_JSON()
 # (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
-# parameter_List = startMenu()
-testvalues = [(1, 500), (1, 1000), (2, 700), (2, 1500), (2, 2000), (2, 2500),
-              (2, 3000), (3, 1000), (3, 1500), (3, 2000), (3, 3000)]
-for testsubject in testvalues:
-    # parameter_List[0], parameter_List[1])
-    compList = budget_Formula.giveFormula(testsubject[0], testsubject[1])
-    chosen_cpu = pcpp_Filter.getCPU(compList, MASTER_LIST[0])
-    chosen_motherboard = pcpp_Filter.getmobo(compList, MASTER_LIST[1],
-                                             chosen_cpu)
-    chosen_ram = pcpp_Filter.getram(compList, MASTER_LIST[2],
-                                    chosen_motherboard)
-    chosen_ssd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[0]
-    chosen_hdd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[1]
-    print(testsubject)
-    print(compList)
-    print(chosen_cpu)
-    print(chosen_motherboard)
-    print(chosen_ram)
-    print(chosen_ssd)
-    print(chosen_hdd)
+parameter_List = startMenu()
+# testvalues = [(1, 500), (1, 1000), (2, 700), (2, 1500), (2, 2000), (2, 2500),
+#              (2, 3000), (3, 1000), (3, 1500), (3, 2000), (3, 3000)]
+# for testsubject in testvalues:
+# parameter_List[0], parameter_List[1])
+compList = budget_Formula.giveFormula(parameter_List[0], parameter_List[1])
+chosen_cpu = pcpp_Filter.getCPU(compList, MASTER_LIST[0])
+chosen_motherboard = pcpp_Filter.getmobo(compList, MASTER_LIST[1], chosen_cpu)
+chosen_ram = pcpp_Filter.getram(compList, MASTER_LIST[2], chosen_motherboard)
+chosen_ssd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[0]
+chosen_hdd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[1]
+print(parameter_List)
+print(compList)
+print(chosen_cpu)
+print(chosen_motherboard)
+print(chosen_ram)
+print(chosen_ssd)
+print(chosen_hdd)
