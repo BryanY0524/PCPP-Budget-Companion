@@ -23,8 +23,10 @@ def update():
         "case")  # Grab Case Product List
     psu_List = pcpp.productLists.getProductList(
         "power-supply")  # Grab PSU Product List
-    dump_JSON(cpuList, mbList, memList, stor_List,
-              gpu_List, case_List, psu_List)
+    cpucool_List = pcpp.productLists.getProductList(
+        "cpu-cooler")  # Grab CPU Cooler List
+    dump_JSON(cpuList, mbList, memList, stor_List, gpu_List, case_List,
+              psu_List)
 
 
 def dump_JSON(productLists):
@@ -34,8 +36,8 @@ def dump_JSON(productLists):
     -   Set of specified product lists
     '''
     path = ".\\INPUTFILES\\"
-    component_set = ("CPU", "MOTHERBOARD", "MEMORY",
-                            "STORAGE", "GPU", "CASE", "PSU")
+    component_set = ("CPU", "MOTHERBOARD", "MEMORY", "STORAGE", "GPU", "CASE",
+                     "PSU")
     for index, components in enumerate(component_set):
         with open(path + components + ".json", "w") as outFile:
             dictList = []
@@ -49,8 +51,8 @@ def read_JSON():
     Reads Component JSON product files
     '''
     path = ".\\INPUTFILES\\"
-    component_set = ("CPU", "MOTHERBOARD", "MEMORY",
-                            "STORAGE", "GPU", "CASE", "PSU")
+    component_set = ("CPU", "MOTHERBOARD", "MEMORY", "STORAGE", "GPU", "CASE",
+                     "PSU")
     MASTER_LIST = []
     for components in component_set:
         with open(path + components + ".json", "r") as inputJSON:
