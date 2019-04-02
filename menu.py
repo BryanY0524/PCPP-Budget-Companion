@@ -107,7 +107,8 @@ def menu_parameter():
         "p1": ["General Usage", "Gaming Desktop", "Media Editing Workstation"],
         "p2": ["AMD", "Intel"],  # Brand of CPU
         "p3": ["Yes", "No"],  # Option for Overclock enabled CPU
-        "p4": ["Micro ATX", "ATX"]  # Size of Motherboard
+        "p4": ["Micro ATX", "ATX"],  # Size of Motherboard
+        "p5": ["Nvidia", "Radeon", "Integrated"],  # Video Card Parameter
     }
     para_Q = ["What type of desktop do you want?"]
     print(para_Q[0])
