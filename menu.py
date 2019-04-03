@@ -200,6 +200,7 @@ chosen_motherboard = pcpp_Filter.getmobo(compList, MASTER_LIST[1], chosen_cpu)
 chosen_ram = pcpp_Filter.getram(compList, MASTER_LIST[2], chosen_motherboard)
 chosen_ssd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[0]
 chosen_hdd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[1]
+chosen_psu = pcpp_Filter.getpsu(compList, MASTER_LIST[6])
 print(parameter_List)
 print(compList)
 print(chosen_cpu)
@@ -207,4 +208,5 @@ print(chosen_motherboard)
 print(chosen_ram)
 print(chosen_ssd)
 print(chosen_hdd)
+print(chosen_psu)
 input("Enter to quit")

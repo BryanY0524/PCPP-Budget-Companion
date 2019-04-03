@@ -434,3 +434,88 @@ def getstor(compList, stor_info):
     # filter a single HDD from filtered set
 
     return [selected_ssd, select_hdd]
+
+
+def getpsu(compList, psu_info):
+    psu_dict = []
+    for psu in psu_info:
+        if '80+' in psu['efficiency'] and psu['price'] != '' and psu['form'] == 'ATX':
+            psu_dict.append(psu)
+    # filter psu in ATX form-factor, minimum 80+ efficiency, and with a price
+
+    for psu in psu_dict:
+        if type(psu['price']) != float:
+            psu['price'] = float(psu['price'].strip('$'))
+        if type(psu['watts']) != float:
+            psu['watts'] = float(psu['watts'].strip(' W'))
+    # turn price and watts into float for further processing
+
+    psu_brand = ['EVGA', 'Corsair', 'SeaSonic']
+    psu_brand_list = []
+    for psu in psu_dict:
+        for brands in psu_brand:
+            if brands in psu['name']:
+                psu_brand_list.append(psu)
+    # filter PSU limiting to the 3 most reputable brands
+
+    psu_list = []
+    if compList['gpu'] > 0:
+        for psu in psu_brand_list:
+            if 1000 >= psu['watts'] >= 550:
+                psu_list.append(psu)
+    else:
+        for psu in psu_brand_list:
+            if 600 >= psu['watts'] >= 300:
+                psu_list.append(psu)
+    #filter PSU wattage base on whether the build has a GPU or not, and limit maximum and minimum
+
+
+    psu_budget_list = []
+    for psu in psu_list:
+        if psu['price'] < compList['psu']:
+            psu_budget_list.append(psu)
+    #filter out price that is out of budget
+
+    efficiency_index_max = 3
+    efficiency_rank = ['Bronze', 'Gold', 'Platinum', 'Titanium']
+    psu_eff_list = []
+    while len(psu_eff_list) == 0:
+        for psu in psu_budget_list:
+            if efficiency_rank[efficiency_index_max] in psu['efficiency']:
+                psu_eff_list.append(psu)
+        efficiency_index_max -= 1
+
+    modular_index_max = 2
+    modular_rank = ['No', 'Semi', 'Full']
+    psu_mod_list = []
+    while len(psu_mod_list) == 0:
+        for psu in psu_eff_list:
+            if modular_rank[modular_index_max] == psu['modular']:
+                psu_mod_list.append(psu)
+        modular_index_max -= 1
+    #filter our a list of best efficiency
+
+    psu_watt = []
+    for psu in psu_mod_list:
+        psu_watt.append(psu['watts'])
+
+    psu_watt_list = []
+    for index, watt in enumerate(psu_watt, 0):
+        if watt == max(psu_watt):
+            psu_watt_list.append(psu_mod_list[index])
+    # filter to PSU with highest wattage
+
+    psu_price = []
+    for psu in psu_watt_list:
+        psu_price.append(psu['price'])
+
+    psu_price_list = []
+    for index, price in enumerate(psu_price, 0):
+        if price == min(psu_price):
+            psu_price_list.append(psu_watt_list[index])
+    # filter to PSU with minimum price
+
+    chosen_psu = psu_price_list[0]
+
+    return chosen_psu
+
