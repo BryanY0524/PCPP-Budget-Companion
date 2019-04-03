@@ -121,8 +121,9 @@ def menu_parameter(userOption):
         "Q5": "What brand of GPU do you want?"
     }
     skip = 0
-    for num in range(1, 7):
-        if num + skip < 6:
+    AMT_OF_Q = len(para_Option)
+    for num in range(1, AMT_OF_Q + 2):
+        if num + skip < AMT_OF_Q + 1:
             print(para_Q["Q" + str(num + skip)])
             for index, items in enumerate(para_Option["p" + str(num + skip)]):
                 print("---Option", str(index + 1) + ":", items)
@@ -132,15 +133,20 @@ def menu_parameter(userOption):
                 if int(userInput) > 0 and int(userInput) < 4:
                     drawline()
                     if userOption == 1:
+                        budget = userBudget(int(userInput))
                         user_Para = [
-                            userInput,
-                            userBudget(int(userInput)), 3, 3, 3, 3
-                        ]  # 3 is default/doesn't matter
+                            (userInput, budget, 1, 3, 3,
+                             3),  # AMD Build Option
+                            (userInput, budget, 2, 3, 3, 3)  # Intel Option
+                        ]
                         return user_Para
                     else:
-                        if len(user_Para) < 6:
-                            drawline()
+                        if len(user_Para) < AMT_OF_Q + 1:
                             user_Para.append(int(userInput))
+                            if user_Para[0] == 1:  # General Usage Option
+                                if num == 3:  # Skip GPU Question
+                                    user_Para.append(3)
+                                    skip += 1
                             if len(user_Para) == 3 and int(
                                     userInput) == 1:  # AMD
                                 user_Para.append(3)  # Append Default Overclock
@@ -191,82 +197,28 @@ def help_parameter():
     print(helpDirectory)
 
 
-def printparts(compList, parameter_List):
-<<<<<<< HEAD
-    cpu_returns = pcpp_Filter.getCPU(compList, MASTER_LIST[0], parameter_List)
-    chosen_cpu = cpu_returns[0]
-    cooler_option = cpu_returns[1]
-    chosen_motherboard = pcpp_Filter.getmobo(compList, MASTER_LIST[1],
-                                             chosen_cpu, parameter_List[4])
-    chosen_ram = pcpp_Filter.getram(compList, MASTER_LIST[2],
-                                    chosen_motherboard)
-    storage_list = pcpp_Filter.getstor(compList, MASTER_LIST[3])
-    chosen_ssd = storage_list[0]
-    chosen_hdd = storage_list[1]
-    chosen_psu = pcpp_Filter.getpsu(compList, MASTER_LIST[6])
-    chosen_case = pcpp_Filter.getcase(compList, MASTER_LIST[5], chosen_motherboard)
-    extra_budget = (compList['cpu'] - chosen_cpu['price']) + (
-            compList['motherboard'] - chosen_motherboard['price']) + (
-                               compList['memory'] - chosen_ram['price']) + (
-                           compList['storage'] - storage_list[2]) + (
-                           compList['psu'] - chosen_psu['price'])
-
-    chosen_gpu = pcpp_Filter.getgpu(compList, MASTER_LIST[4], extra_budget, parameter_List[5])
-    chosen_cooler = pcpp_Filter.getcooler(compList, MASTER_LIST[7], extra_budget, cooler_option, chosen_gpu)
-
-    print(parameter_List)
-    print(compList)
-    print(chosen_cpu)
-    print(chosen_cooler)
-=======
-    chosen_cpu = pcpp_Filter.getCPU(compList, MASTER_LIST[0])
-    chosen_motherboard = pcpp_Filter.getmobo(compList, MASTER_LIST[1],
-                                             chosen_cpu)
-    chosen_ram = pcpp_Filter.getram(compList, MASTER_LIST[2],
-                                    chosen_motherboard)
-    chosen_ssd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[0]
-    chosen_hdd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[1]
-    chosen_psu = pcpp_Filter.getpsu(compList, MASTER_LIST[6])
-    print(parameter_List)
-    print(compList)
-    print(chosen_cpu)
->>>>>>> 0ef46f714ed0d68b9e9ebbb1c5255be9a97ff608
-    print(chosen_motherboard)
-    print(chosen_ram)
-    print(chosen_ssd)
-    print(chosen_hdd)
-    print(chosen_psu)
-<<<<<<< HEAD
-    print(chosen_gpu)
-    print(chosen_case)
-
-=======
->>>>>>> 0ef46f714ed0d68b9e9ebbb1c5255be9a97ff608
-
-
 MASTER_LIST = pcpp_Scrape.read_JSON()
 # (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
-<<<<<<< HEAD
-#testvalues = [(1, 500), (1, 1000), (2, 700), (2, 1500), (2, 2000), (2, 2500),
+# testvalues = [(1, 500), (1, 1000), (2, 700), (2, 1500), (2, 2000), (2, 2500),
 #              (2, 3000), (3, 1000), (3, 1500), (3, 2000), (3, 3000)]
-#testvalues = [['1', 500, 3, 3, 3, 3], ['1', 1000, 3, 3, 3, 3], ['2', 700, 3, 3, 3, 3],
+# testvalues = [['1', 500, 3, 3, 3, 3], ['1', 1000, 3, 3, 3, 3], ['2', 700, 3, 3, 3, 3],
 #              ['2', 1500, 3, 3, 3, 3], ['2', 2000, 3, 3, 3, 3], ['2', 2500, 3, 3, 3, 3],
 #              ['2', 3000, 3, 3, 3, 3], ['3', 1000, 3, 3, 3, 3], ['3', 2000, 3, 3, 3, 3],
 #              ['3', 3000, 3, 3, 3, 3]]
-testvalues = [['2', 1500, 1, 1, 3, 3],['2', 1500, 1, 2, 3, 3],['2', 1500, 1, 3, 3, 3],
-              ['2', 1500, 2, 1, 3, 3], ['2', 1500, 2, 2, 3, 3], ['2', 1500, 2, 3, 3, 3],
-              ['2', 1500, 3, 1, 1, 3], ['2', 1500, 3, 2, 1, 3], ['2', 1500, 3, 3, 1, 3]]
-=======
-testvalues = [(1, 500), (1, 1000), (2, 700), (2, 1500), (2, 2000), (2, 2500),
-              (2, 3000), (3, 1000), (3, 1500), (3, 2000), (3, 3000)]
->>>>>>> 0ef46f714ed0d68b9e9ebbb1c5255be9a97ff608
+testvalues = [['2', 1500, 1, 1, 3, 3], ['2', 1500, 1, 2, 3, 3],
+              ['2', 1500, 1, 3, 3, 3], ['2', 1500, 2, 1, 3, 3],
+              ['2', 1500, 2, 2, 3, 3], ['2', 1500, 2, 3, 3, 3],
+              ['2', 1500, 3, 1, 1, 3], ['2', 1500, 3, 2, 1, 3],
+              ['2', 1500, 3, 3, 1, 3]]
 choice = input("Test option (1 = menu) (2 = test): ")
 if choice == "1":
     parameter_List = startMenu()
-    compList = budget_Formula.giveFormula(parameter_List[0], parameter_List[1])
-    printparts(compList, parameter_List)
+    for lists in parameter_List:
+        compList = budget_Formula.giveFormula(lists[0], lists[1])
+        pcpp_Filter.grabBuilds(compList, lists, MASTER_LIST)
+        drawline()
 
 if choice == "2":
     for testsubject in testvalues:
         compList = budget_Formula.giveFormula(testsubject[0], testsubject[1])
-        printparts(compList, testsubject)
+        pcpp_Filter.grabBuilds(compList, testsubject, MASTER_LIST)

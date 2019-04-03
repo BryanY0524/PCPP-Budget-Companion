@@ -109,7 +109,7 @@ def giveFormula(option, budget):
         elif 2001 > budget > 1500:
             return budget_list[4]
         elif 3001 > budget > 2000:
-            return budget_list[5]
+            return budget_list[5]  
     elif type == 'ws':
         if 1501 > budget >= 1000:
             return budget_list[6]

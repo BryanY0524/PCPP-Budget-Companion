@@ -1,6 +1,42 @@
 from PCPartPicker_API import pcpartpicker as pcpp
 
 
+def grabBuilds(compList, parameter_List, MASTER_LIST):
+    cpu_returns = getCPU(compList, MASTER_LIST[0], parameter_List)
+    chosen_cpu = cpu_returns[0]
+    cooler_option = cpu_returns[1]
+    chosen_motherboard = getmobo(compList, MASTER_LIST[1], chosen_cpu,
+                                 parameter_List[4])
+    chosen_ram = getram(compList, MASTER_LIST[2], chosen_motherboard)
+    storage_list = getstor(compList, MASTER_LIST[3])
+    chosen_ssd = storage_list[0]
+    chosen_hdd = storage_list[1]
+    chosen_psu = getpsu(compList, MASTER_LIST[6])
+    chosen_case = getcase(compList, MASTER_LIST[5], chosen_motherboard)
+    extra_budget = (compList['cpu'] - chosen_cpu['price']) + (
+        compList['motherboard'] - chosen_motherboard['price']) + (
+            compList['memory'] - chosen_ram['price']) + (
+                compList['storage'] - storage_list[2]) + (
+                    compList['psu'] - chosen_psu['price'])
+
+    chosen_gpu = getgpu(compList, MASTER_LIST[4], extra_budget,
+                        parameter_List[5])
+    chosen_cooler = getcooler(compList, MASTER_LIST[7], extra_budget,
+                              cooler_option, chosen_gpu)
+
+    print(parameter_List)
+    print(compList)
+    print(chosen_cpu)
+    print(chosen_cooler)
+    print(chosen_motherboard)
+    print(chosen_ram)
+    print(chosen_ssd)
+    print(chosen_hdd)
+    print(chosen_psu)
+    print(chosen_gpu)
+    print(chosen_case)
+
+
 def getCPU(compList, cpuList, user_para):
     '''
     '''
@@ -81,15 +117,15 @@ def getCPU(compList, cpuList, user_para):
         while len(cpu_select_list) == 0:
             for cpu in cpu_set:
                 for rank in cpu_other_rank[list_index]:
-                        if rank in cpu['name']:
-                            cpu_select_list.append(cpu)
+                    if rank in cpu['name']:
+                        cpu_select_list.append(cpu)
             list_index -= 1
     elif 'game' in desktop_type:
         while len(cpu_select_list) == 0:
             for cpu in cpu_set:
                 for rank in cpu_game_rank[list_index]:
-                        if rank in cpu['name']:
-                            cpu_select_list.append(cpu)
+                    if rank in cpu['name']:
+                        cpu_select_list.append(cpu)
             list_index -= 1
 
     # select CPU from CPU ranking list, select best SKU first
@@ -272,7 +308,8 @@ def getmobo(compList, mobo_info, chosen_cpu, user_input):
                 mobo_user.append(mobo)
     elif user_input == 3:
         for mobo in mobo_set:
-            if mobo['form-factor'] == 'Micro ATX' or mobo['form-factor'] == 'ATX':
+            if mobo['form-factor'] == 'Micro ATX' or mobo[
+                    'form-factor'] == 'ATX':
                 mobo_user.append(mobo)
     # Filter motherboard size by user input
 
@@ -504,9 +541,11 @@ def getstor(compList, stor_info):
         if price == min(hdd_price_list):
             hdd_min_price.append(hdd_value_list[index])
 
-    if len(hdd_min_price) > 0 and hdd_min_price[0]['capacity'] > 900 and 'ws' in compList['name']:
+    if len(hdd_min_price) > 0 and hdd_min_price[0][
+            'capacity'] > 900 and 'ws' in compList['name']:
         selected_hdd = hdd_min_price[0]
-        remaining_budget = compList['storage'] - selected_ssd['price'] - selected_hdd['price']
+        remaining_budget = compList['storage'] - selected_ssd[
+            'price'] - selected_hdd['price']
     else:
         selected_hdd = 'NO HDD'
         remaining_budget = compList['storage'] - selected_ssd['price']
@@ -515,11 +554,11 @@ def getstor(compList, stor_info):
     return selected_ssd, selected_hdd, remaining_budget
 
 
-
 def getpsu(compList, psu_info):
     psu_dict = []
     for psu in psu_info:
-        if '80+' in psu['efficiency'] and psu['price'] != '' and psu['form'] == 'ATX':
+        if '80+' in psu['efficiency'] and psu['price'] != '' and psu[
+                'form'] == 'ATX':
             psu_dict.append(psu)
     # filter psu in ATX form-factor, minimum 80+ efficiency, and with a price
 
@@ -548,7 +587,6 @@ def getpsu(compList, psu_info):
             if 600 >= psu['watts'] >= 300:
                 psu_list.append(psu)
     #filter PSU wattage base on whether the build has a GPU or not, and limit maximum and minimum
-
 
     psu_budget_list = []
     for psu in psu_list:
@@ -610,10 +648,13 @@ def getgpu(compList, gpu_info, extra_budget, choice):
                 gpu_dict.append(gpu)
         # filter out the gpu without a price
 
-        new_gpu_list = ['Radeon RX 560 - 896', 'Radeon RX 560 - 1024', 'Radeon RX 570',
-                    'GeForce GTX 1660', 'Radeon RX 580', 'GeForce GTX 1660 Ti', 'GeForce RTX 2060',
-                    'GeForce RTX 2070', 'GeForce RTX 2080', 'GeForce RTX 2080 Ti']
-        gpu_chipset_index = len(new_gpu_list)-1
+        new_gpu_list = [
+            'Radeon RX 560 - 896', 'Radeon RX 560 - 1024', 'Radeon RX 570',
+            'GeForce GTX 1660', 'Radeon RX 580', 'GeForce GTX 1660 Ti',
+            'GeForce RTX 2060', 'GeForce RTX 2070', 'GeForce RTX 2080',
+            'GeForce RTX 2080 Ti'
+        ]
+        gpu_chipset_index = len(new_gpu_list) - 1
         # list the new chipset, with ascending performance ranking
         # index will be used later for filter
 
@@ -707,7 +748,10 @@ def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu):
     if cooler_option == 0:
         chosen_cooler = 'No after market cooler'
     else:
-        pre_selected_list = ['Hyper 212 EVO', 'CRYORIG M9 Plus', 'Scythe - Ninja 5', 'CRYORIG R1', 'NH-D15', 'Dark Rock Pro 4']
+        pre_selected_list = [
+            'Hyper 212 EVO', 'CRYORIG M9 Plus', 'Scythe - Ninja 5',
+            'CRYORIG R1', 'NH-D15', 'Dark Rock Pro 4'
+        ]
         # a pre_select list of reputable CPU cooler, with ranking ascending
 
         cooler_list = []
@@ -767,7 +811,7 @@ def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu):
                 cooler_min_list.append(cooler)
         # filter to cooler with minimum price from this previous ranking filter
 
-        chosen_cooler = cooler_min_list[len(cooler_min_list)-1]
+        chosen_cooler = cooler_min_list[len(cooler_min_list) - 1]
         # choose the last cooler from the minimum price list
 
     return chosen_cooler
@@ -780,8 +824,8 @@ def getcase(compList, case_info, chosen_mobo):
             if 'MicroATX' in case['type'] and case['price'] != '':
                 case_list.append(case)
         else:
-            if 'Test' not in case['type'] and 'Micro' not in case['type'] and 'ATX' in case[
-                'type'] and case['price'] != '':
+            if 'Test' not in case['type'] and 'Micro' not in case[
+                    'type'] and 'ATX' in case['type'] and case['price'] != '':
                 case_list.append(case)
     # Filter case based on motherboard size and remove items with empty price
 
@@ -798,8 +842,10 @@ def getcase(compList, case_info, chosen_mobo):
             case_nocd_list.append(case)
     # Filter to case within budget and without DVD drive bay
 
-    case_brands = ['Phanteks', 'NZXT', 'Lian-Li', 'Silverstone',
-                   'Cooler Master', 'Fractal Design', 'Corsair']
+    case_brands = [
+        'Phanteks', 'NZXT', 'Lian-Li', 'Silverstone', 'Cooler Master',
+        'Fractal Design', 'Corsair'
+    ]
     case_sub_brands = ['Thermaltake', 'Rosewill', 'GAMDIAS']
     case_brand_list = []
     for case in case_nocd_list:
@@ -821,7 +867,7 @@ def getcase(compList, case_info, chosen_mobo):
         for case in case_brand_list:
             if case['ratings'] > 0:
                 rate_list.append(case['ratings'])
-        avg_rate = sum(rate_list)/len(rate_list)
+        avg_rate = sum(rate_list) / len(rate_list)
         for case in case_brand_list:
             if case['ratings'] >= avg_rate:
                 case_rate_list.append(case)
@@ -835,7 +881,7 @@ def getcase(compList, case_info, chosen_mobo):
         case_price = []
         for case in case_rate_list:
             case_price.append(case['price'])
-        avg_price = sum(case_price)/len(case_price)
+        avg_price = sum(case_price) / len(case_price)
         for case in case_rate_list:
             if case['price'] > avg_price:
                 case_price_list.append(case)
