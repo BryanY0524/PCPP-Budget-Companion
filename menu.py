@@ -192,6 +192,7 @@ def help_parameter():
 
 
 def printparts(compList, parameter_List):
+<<<<<<< HEAD
     cpu_returns = pcpp_Filter.getCPU(compList, MASTER_LIST[0], parameter_List)
     chosen_cpu = cpu_returns[0]
     cooler_option = cpu_returns[1]
@@ -217,18 +218,35 @@ def printparts(compList, parameter_List):
     print(compList)
     print(chosen_cpu)
     print(chosen_cooler)
+=======
+    chosen_cpu = pcpp_Filter.getCPU(compList, MASTER_LIST[0])
+    chosen_motherboard = pcpp_Filter.getmobo(compList, MASTER_LIST[1],
+                                             chosen_cpu)
+    chosen_ram = pcpp_Filter.getram(compList, MASTER_LIST[2],
+                                    chosen_motherboard)
+    chosen_ssd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[0]
+    chosen_hdd = pcpp_Filter.getstor(compList, MASTER_LIST[3])[1]
+    chosen_psu = pcpp_Filter.getpsu(compList, MASTER_LIST[6])
+    print(parameter_List)
+    print(compList)
+    print(chosen_cpu)
+>>>>>>> 0ef46f714ed0d68b9e9ebbb1c5255be9a97ff608
     print(chosen_motherboard)
     print(chosen_ram)
     print(chosen_ssd)
     print(chosen_hdd)
     print(chosen_psu)
+<<<<<<< HEAD
     print(chosen_gpu)
     print(chosen_case)
 
+=======
+>>>>>>> 0ef46f714ed0d68b9e9ebbb1c5255be9a97ff608
 
 
 MASTER_LIST = pcpp_Scrape.read_JSON()
 # (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
+<<<<<<< HEAD
 #testvalues = [(1, 500), (1, 1000), (2, 700), (2, 1500), (2, 2000), (2, 2500),
 #              (2, 3000), (3, 1000), (3, 1500), (3, 2000), (3, 3000)]
 #testvalues = [['1', 500, 3, 3, 3, 3], ['1', 1000, 3, 3, 3, 3], ['2', 700, 3, 3, 3, 3],
@@ -238,6 +256,10 @@ MASTER_LIST = pcpp_Scrape.read_JSON()
 testvalues = [['2', 1500, 1, 1, 3, 3],['2', 1500, 1, 2, 3, 3],['2', 1500, 1, 3, 3, 3],
               ['2', 1500, 2, 1, 3, 3], ['2', 1500, 2, 2, 3, 3], ['2', 1500, 2, 3, 3, 3],
               ['2', 1500, 3, 1, 1, 3], ['2', 1500, 3, 2, 1, 3], ['2', 1500, 3, 3, 1, 3]]
+=======
+testvalues = [(1, 500), (1, 1000), (2, 700), (2, 1500), (2, 2000), (2, 2500),
+              (2, 3000), (3, 1000), (3, 1500), (3, 2000), (3, 3000)]
+>>>>>>> 0ef46f714ed0d68b9e9ebbb1c5255be9a97ff608
 choice = input("Test option (1 = menu) (2 = test): ")
 if choice == "1":
     parameter_List = startMenu()
