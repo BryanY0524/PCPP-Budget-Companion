@@ -90,7 +90,7 @@ def giveFormula(option, budget):
         'case': 0.06
     },
         {
-        'name': 'ult',
+        'name': 'game_ult',
         'cpu': 0.23,
         'motherboard': 0.08,
         'memory': 0.13,
