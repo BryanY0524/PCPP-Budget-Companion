@@ -146,10 +146,13 @@ def getCPU(compList, cpuList, user_para):
     else:
         user_cooler_option = '0'
         while user_cooler_option not in option_list:
-            #print('Input "1" if YES')
-            #print('Input "2" if NO')
-            #user_cooler_option = input('Do you want an aftermarket CPU cooler?')
-            user_cooler_option = '1'
+            print('Option 1 -- YES')
+            print('Option 2 -- NO')
+            user_cooler_option = input('Do you want an aftermarket CPU cooler?')
+            if user_cooler_option not in option_list:
+                print('***Invalid Option***')
+                print('***Please Try Again***')
+            #user_cooler_option = '1'
     return chosen_cpu, int(user_cooler_option)
 
 

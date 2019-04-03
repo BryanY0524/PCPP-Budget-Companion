@@ -88,6 +88,16 @@ def giveFormula(option, budget):
         'storage': 0.11,
         'psu': 0.05,
         'case': 0.06
+    },
+        {
+        'name': 'ult',
+        'cpu': 0.23,
+        'motherboard': 0.08,
+        'memory': 0.13,
+        'gpu': 0.35,
+        'storage': 0.10,
+        'psu': 0.05,
+        'case': 0.06
     })
     typeList = ["gen", "game", "ws"]
     type = typeList[int(option) - 1]
@@ -97,23 +107,35 @@ def giveFormula(option, budget):
                 set[item] = round(set[item] * budget, 2)
 
     if type == 'gen':
-        if 751 > budget >= 500:
+        if 750 > budget >= 500:
             return budget_list[0]
-        elif budget > 750:
+        elif 1200 > budget >= 750:
             return budget_list[1]
-    elif type == 'game':
-        if 1001 > budget >= 700:
-            return budget_list[2]
-        elif 1501 > budget > 1000:
-            return budget_list[3]
-        elif 2001 > budget > 1500:
-            return budget_list[4]
-        elif 3001 > budget > 2000:
-            return budget_list[5]  
-    elif type == 'ws':
-        if 1501 > budget >= 1000:
+        elif 2000 > budget >= 1200:
             return budget_list[6]
-        elif 2001 > budget > 1500:
+        elif 2000 > budget >= 1500:
             return budget_list[7]
-        elif 3001 > budget > 2000:
+        elif 3000 >= budget >= 2000:
             return budget_list[8]
+        elif budget > 3000:
+            return budget_list[9]
+    elif type == 'game':
+        if 1000 > budget >= 700:
+            return budget_list[2]
+        elif 1500 > budget >= 1000:
+            return budget_list[3]
+        elif 2000 > budget >= 1500:
+            return budget_list[4]
+        elif 3000 >= budget >= 2000:
+            return budget_list[5]
+        elif budget > 3000:
+            return budget_list[9]
+    elif type == 'ws':
+        if 1500 > budget >= 1000:
+            return budget_list[6]
+        elif 2000 > budget >= 1500:
+            return budget_list[7]
+        elif 3000 >= budget >= 2000:
+            return budget_list[8]
+        elif budget > 3000:
+            return budget_list[9]
