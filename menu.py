@@ -110,18 +110,20 @@ def menu_parameter(userOption):
         "p2": ["AMD", "Intel", "Doesn't Matter"],  # Brand of CPU
         "p3": ["Yes", "No",
                "Doesn't Matter"],  # Option for Overclock enabled CPU
-        "p4": ["Micro ATX", "ATX", "Doesn't Matter"],  # Size of Motherboard
+        "p4": ["Small", "Regular", "Doesn't Matter"],  # Size of Case and MB
         "p5": ["Nvidia", "Radeon", "Doesn't Matter"],  # Video Card Parameter
+        "p6": ["Yes", "No", "Doesn't Matter"]  # Aftermarket CPU Cooler
     }
     para_Q = {
         "Q1": "What type of desktop do you want?",
         "Q2": "What brand of CPU do you want?",
         "Q3": "Do you want an Overclock enabled CPU?",
-        "Q4": "What size of motherboard do you want?",
-        "Q5": "What brand of GPU do you want?"
+        "Q4": "What size of the computer tower do you want?",
+        "Q5": "What brand of GPU do you want?",
+        "Q6": "Do you want to purchase an aftermarket CPU Cooler?"
     }
-    for num in range(1, 7):
-        if num < 6:
+    for num in range(1, 8):
+        if num < 7:
             print(para_Q["Q" + str(num)])
             for index, items in enumerate(para_Option["p" + str(num)]):
                 print("---Option", str(index + 1) + ":", items)
@@ -132,11 +134,11 @@ def menu_parameter(userOption):
                     if userOption == 1:
                         user_Para = [
                             userInput,
-                            userBudget(int(userInput)), 3, 3, 3, 3
+                            userBudget(int(userInput)), 3, 3, 3, 3, 3
                         ]  # 3 is default/doesn't matter
                         return user_Para
                     else:
-                        if len(user_Para) < 6:
+                        if len(user_Para) < 7:
                             drawline()
                             user_Para.append(int(userInput))
                             if num == 1:
@@ -155,7 +157,6 @@ def userBudget(option):
     '''
     Filler Description
     '''
-    drawline()
     budgetFloor = [500, 700, 1000, 0]
     budgetStatus = True
     budget = input("Enter your budget: ")
@@ -175,6 +176,7 @@ def userBudget(option):
             print("***Error: Invalid Value***")
             budget = input("Enter your budget: ")
     print("Budget = $%.2f" % budget)
+    drawline()
     return budget
 
 
