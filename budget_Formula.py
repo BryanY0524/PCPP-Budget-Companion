@@ -73,8 +73,8 @@ def giveFormula(option, budget):
         'name': 'ws2',
         'cpu': 0.28,
         'motherboard': 0.08,
-        'memory': 0.20,
-        'gpu': 0.20,
+        'memory': 0.175,
+        'gpu': 0.225,
         'storage': 0.09,
         'psu': 0.07,
         'case': 0.08
@@ -83,11 +83,11 @@ def giveFormula(option, budget):
         'name': 'ws3',
         'cpu': 0.25,
         'motherboard': 0.09,
-        'memory': 0.12,
+        'memory': 0.14,
         'gpu': 0.30,
         'storage': 0.11,
         'psu': 0.05,
-        'case': 0.08
+        'case': 0.06
     })
     typeList = ["gen", "game", "ws"]
     type = typeList[int(option) - 1]

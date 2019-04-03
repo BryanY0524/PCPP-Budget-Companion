@@ -4111,12 +4111,14 @@ def getstor(compList, stor_info):
             hdd_min_price.append(hdd_value_list[index])
 
     if len(hdd_min_price) > 0 and hdd_min_price[0]['capacity'] > 900 and 'ws' in compList['name']:
-        select_hdd = hdd_min_price[0]
+        selected_hdd = hdd_min_price[0]
+        remaining_budget = compList['storage'] - selected_ssd['price'] - selected_hdd['price']
     else:
-        select_hdd = 'NO HDD'
+        selected_hdd = 'NO HDD'
+        remaining_budget = compList['storage'] - selected_ssd['price']
     # filter a single HDD from filtered set
 
-    return [selected_ssd, select_hdd]
+    return [selected_ssd, selected_hdd, remaining_budget]
 
 
 getstor(budget, stor_List)

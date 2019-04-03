@@ -11,43 +11,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/menu.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="204" column="15" lean-forward="true" selection-start-line="204" selection-start-column="15" selection-end-line="204" selection-end-column="15" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pcpp_Scrape.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" selection-start-line="11" selection-end-line="11" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#49#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pcpp_Filter.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="521" lean-forward="true" selection-start-line="521" selection-end-line="521" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/storage_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="4123" column="36" selection-start-line="4123" selection-start-column="36" selection-end-line="4123" selection-end-column="36" />
+            <state relative-caret-position="534">
+              <caret line="4105" column="46" selection-start-line="4105" selection-start-column="46" selection-end-line="4105" selection-end-column="46" />
               <folding>
                 <element signature="e#242#650841#0" />
               </folding>
@@ -56,12 +23,48 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/psu_test.py">
+        <entry file="file://$PROJECT_DIR$/pcpp_Scrape.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="1942" column="21" selection-start-line="1861" selection-end-line="1942" selection-end-column="21" />
+            <state>
+              <caret selection-end-line="22" selection-end-column="41" />
               <folding>
-                <element signature="e#239#330053#0" />
+                <element signature="e#0#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gpu_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="3852" column="61" lean-forward="true" selection-start-line="3851" selection-start-column="12" selection-end-line="3852" selection-end-column="61" />
+              <folding>
+                <element signature="e#93#660191#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ram_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="3405" column="47" lean-forward="true" selection-start-line="3405" selection-start-column="47" selection-end-line="3405" selection-end-column="47" />
+              <folding>
+                <element signature="e#301#633075#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/case_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="3568" selection-start-line="3568" selection-end-line="3651" selection-end-column="22" />
+              <folding>
+                <element signature="e#14#570572#0" />
               </folding>
             </state>
           </provider>
@@ -83,6 +86,8 @@
       <find>X470</find>
       <find>2x4</find>
       <find>MX500</find>
+      <find>rank</find>
+      <find>ATX</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -94,44 +99,47 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/Data_filter/pcpartpicker_ram.py" />
         <option value="$PROJECT_DIR$/INPUTFILES/ram_test.py" />
-        <option value="$PROJECT_DIR$/budget_Formula.py" />
-        <option value="$PROJECT_DIR$/ram_test.py" />
         <option value="$PROJECT_DIR$/../BCIT/ACIT-1515/Assignment1_BryanYuen/Assignment1/earthConverter_auto.py" />
         <option value="$PROJECT_DIR$/../BCIT/ACIT-1515/Assignment3/assignment3.py" />
+        <option value="$PROJECT_DIR$/psu_test.py" />
         <option value="$PROJECT_DIR$/storage_test.py" />
-        <option value="$PROJECT_DIR$/../Desktop-Builder - Bryan/psu_test.py" />
+        <option value="$PROJECT_DIR$/gpu_test.py" />
+        <option value="$PROJECT_DIR$/cooler_test.py" />
+        <option value="$PROJECT_DIR$/budget_Formula.py" />
+        <option value="$PROJECT_DIR$/ram_test.py" />
+        <option value="$PROJECT_DIR$/case_test.py" />
         <option value="$PROJECT_DIR$/pcpp_Filter.py" />
         <option value="$PROJECT_DIR$/menu.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="78" />
-    <option name="y" value="70" />
-    <option name="width" value="1149" />
-    <option name="height" value="770" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="593" />
+    <option name="y" value="86" />
+    <option name="width" value="1499" />
+    <option name="height" value="944" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Desktop-Builder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Desktop-Builder" type="462c0819:PsiDirectoryNode" />
+              <item name="Desktop-Builder - Bryan" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Desktop-Builder - Bryan" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../BCIT/ACIT-1515/Assignment3/assignment3.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -147,7 +155,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.menu">
-    <configuration name="assignment3" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="case_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Desktop-Builder" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -155,11 +163,53 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../BCIT/ACIT-1515/Assignment3" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../BCIT/ACIT-1515/Assignment3/assignment3.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/case_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="cooler_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Desktop-Builder" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cooler_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="gpu_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Desktop-Builder" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gpu_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -189,7 +239,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pcpp_Filter" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="pcpp_Scrape" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Desktop-Builder" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -201,49 +251,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pcpp_Filter.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ram_test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Desktop-Builder" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ram_test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="storage_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Desktop-Builder" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/storage_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pcpp_Scrape.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -255,10 +263,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.menu" />
-        <item itemvalue="Python.storage_test" />
-        <item itemvalue="Python.assignment3" />
-        <item itemvalue="Python.ram_test (1)" />
-        <item itemvalue="Python.pcpp_Filter" />
+        <item itemvalue="Python.case_test" />
+        <item itemvalue="Python.pcpp_Scrape" />
+        <item itemvalue="Python.cooler_test" />
+        <item itemvalue="Python.gpu_test" />
       </list>
     </recent_temporary>
   </component>
@@ -278,12 +286,12 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13483146" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49731904" visible="true" weight="0.13483146" />
+      <window_info id="Structure" order="1" sideWeight="0.50268096" side_tool="true" visible="true" weight="0.13483146" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32917964" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.34450403" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.058981232" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.20560747" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -338,78 +346,98 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/budget_Formula.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1740">
-          <caret line="87" column="24" selection-start-line="87" selection-start-column="24" selection-end-line="87" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ram_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1334">
-          <caret line="3328" column="33" lean-forward="true" selection-start-line="3328" selection-start-column="33" selection-end-line="3328" selection-end-column="33" />
-          <folding>
-            <element signature="e#301#633075#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../BCIT/ACIT-1515/Assignment1_BryanYuen/Assignment1/earthConverter_auto.py" />
     <entry file="file://$PROJECT_DIR$/../BCIT/ACIT-1515/Assignment3/assignment3.py" />
-    <entry file="file://$PROJECT_DIR$/../Desktop-Builder - Bryan/psu_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="1943" column="4" lean-forward="true" selection-start-line="1943" selection-start-column="4" selection-end-line="1943" selection-end-column="4" />
-          <folding>
-            <element signature="e#239#330053#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="4123" column="36" selection-start-line="4123" selection-start-column="36" selection-end-line="4123" selection-end-column="36" />
-          <folding>
-            <element signature="e#242#650841#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/psu_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="1942" column="21" selection-start-line="1861" selection-end-line="1942" selection-end-column="21" />
+        <state relative-caret-position="302">
+          <caret line="1944" lean-forward="true" selection-start-line="1944" selection-end-line="1944" />
           <folding>
             <element signature="e#239#330053#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pcpp_Filter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="521" lean-forward="true" selection-start-line="521" selection-end-line="521" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pcpp_Scrape.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" selection-end-column="24" />
+        <state>
+          <caret selection-end-line="22" selection-end-column="41" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cooler_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" lean-forward="true" selection-end-line="2" selection-end-column="13" />
+          <folding>
+            <element signature="e#278#136927#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gpu_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="3852" column="61" lean-forward="true" selection-start-line="3851" selection-start-column="12" selection-end-line="3852" selection-end-column="61" />
+          <folding>
+            <element signature="e#93#660191#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ram_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="3405" column="47" lean-forward="true" selection-start-line="3405" selection-start-column="47" selection-end-line="3405" selection-end-column="47" />
+          <folding>
+            <element signature="e#301#633075#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/case_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="3568" selection-start-line="3568" selection-end-line="3651" selection-end-column="22" />
+          <folding>
+            <element signature="e#14#570572#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pcpp_Filter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="774" lean-forward="true" selection-start-line="774" selection-end-line="774" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/budget_Formula.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1683">
+          <caret line="99" column="31" lean-forward="true" selection-start-line="99" selection-start-column="31" selection-end-line="99" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/menu.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="204" column="15" lean-forward="true" selection-start-line="204" selection-start-column="15" selection-end-line="204" selection-end-column="15" />
+        <state relative-caret-position="297">
+          <caret line="235" column="89" lean-forward="true" selection-start-line="235" selection-start-column="89" selection-end-line="235" selection-end-column="89" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="4105" column="46" selection-start-line="4105" selection-start-column="46" selection-end-line="4105" selection-end-column="46" />
+          <folding>
+            <element signature="e#242#650841#0" />
           </folding>
         </state>
       </provider>

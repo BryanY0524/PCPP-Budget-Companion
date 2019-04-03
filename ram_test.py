@@ -3391,9 +3391,9 @@ def getram(compList, ram_info, chosen_mobo):
     #make a list thats in the same order as ram_select_set, but in terms of ram speed only
 
     ram_speed_module = []
-    for index, speed in enumerate(ram_speed_list, 0):
-        if speed == max(ram_speed_list):
-            ram_speed_module.append(ram_select_set[index])
+    for ram in ram_select_set:
+        if ram['speed'] == max(ram_speed_list):
+            ram_speed_module.append(ram)
     #filter the ram modules with the maximum speed
 
     ram_price_list = []
@@ -3402,9 +3402,9 @@ def getram(compList, ram_info, chosen_mobo):
     # make a list thats in the same order as ram_select_set, but in terms of ram speed only
 
     ram_price_module = []
-    for index, price in enumerate(ram_price_list, 0):
-        if price == min(ram_price_list):
-            ram_price_module.append(ram_speed_module[index])
+    for ram in ram_speed_module:
+        if ram['price'] == min(ram_price_list):
+            ram_price_module.append(ram)
     # filter the ram modules with the minimum price
 
     chosen_ram = ram_price_module[0]

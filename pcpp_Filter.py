@@ -1,11 +1,11 @@
 from PCPartPicker_API import pcpartpicker as pcpp
 
 
-def getCPU(compList, cpuList):
+def getCPU(compList, cpuList, user_para):
     '''
     '''
     CPU_PARAMETER = [
-        'AMD Ryzen', 'Intel Core i3-8', 'Intel Core i5-8', 'Intel Core i7-8',
+        'AMD Ryzen', 'Intel Core i3-8', 'Intel Core i5-8', 'Intel Core i7-87',
         'Intel Core i3-9', 'Intel Core i5-9', 'Intel Core i7-9700',
         'Intel Core i9-9900K'
     ]
@@ -18,8 +18,35 @@ def getCPU(compList, cpuList):
                 if CPU_EXCLUDE not in cpu['name']:
                     if cpu['price'] != '':
                         cpu_Dict.append(cpu)
+    cpu_user_para = []
+    if user_para[2] == 3:
+        for cpu in cpu_Dict:
+            cpu_user_para.append(cpu)
+    elif user_para[2] == 1:
+        for cpu in cpu_Dict:
+            if 'AMD' in cpu['name']:
+                cpu_user_para.append(cpu)
+    elif user_para[2] == 2:
+        for cpu in cpu_Dict:
+            if 'Intel' in cpu['name']:
+                cpu_user_para.append(cpu)
+    # Filter cpu brand according to user input parameter
 
-    for cpu in cpu_Dict:
+    cpu_user = []
+    if user_para[3] == 3:
+        for cpu in cpu_user_para:
+            cpu_user.append(cpu)
+    elif user_para[3] == 1:
+        for cpu in cpu_user_para:
+            if 'K' in cpu['name'] or 'AMD' in cpu['name']:
+                cpu_user.append(cpu)
+    elif user_para[3] == 2:
+        for cpu in cpu_user_para:
+            if 'K' not in cpu['name']:
+                cpu_user.append(cpu)
+    # Filter cpu according to overclocking user input parameter
+
+    for cpu in cpu_user:
         if type(cpu['price']) == float:
             continue
         else:
@@ -28,13 +55,13 @@ def getCPU(compList, cpuList):
     desktop_type = compList["name"]
     chosen_set = []
     if 'gen' in desktop_type:
-        for cpu in cpu_Dict:
+        for cpu in cpu_user:
             if 'AMD' in cpu['name'] and 'G' in cpu['name']:
                 chosen_set.append(cpu)
             if 'Intel' in cpu['name'] and 'F' not in cpu['name']:
                 chosen_set.append(cpu)
     elif 'game' in desktop_type or 'ws' in desktop_type:
-        for cpu in cpu_Dict:
+        for cpu in cpu_user:
             if 'AMD' in cpu['name'] and 'G' not in cpu['name']:
                 chosen_set.append(cpu)
             if 'Intel' in cpu['name']:
@@ -44,17 +71,53 @@ def getCPU(compList, cpuList):
     for cpu in chosen_set:
         if cpu['price'] < compList['cpu']:
             cpu_set.append(cpu)
+    # filter CPU within budget
+
+    cpu_game_rank = ['i3', 'Ryzen 3', 'Ryzen 5', 'i5', 'Ryzen 7', 'i7', 'i9']
+    cpu_other_rank = ['i3', 'Ryzen 3', 'i5', 'Ryzen 5', 'i7', 'Ryzen 7', 'i9']
+    cpu_select_list = []
+    list_index = len(cpu_game_rank) - 1
+    if 'gen' in desktop_type or 'ws' in desktop_type:
+        while len(cpu_select_list) == 0:
+            for cpu in cpu_set:
+                for rank in cpu_other_rank[list_index]:
+                        if rank in cpu['name']:
+                            cpu_select_list.append(cpu)
+            list_index -= 1
+    elif 'game' in desktop_type:
+        while len(cpu_select_list) == 0:
+            for cpu in cpu_set:
+                for rank in cpu_game_rank[list_index]:
+                        if rank in cpu['name']:
+                            cpu_select_list.append(cpu)
+            list_index -= 1
+
+    # select CPU from CPU ranking list, select best SKU first
 
     cpu_p = []
-    for i in cpu_set:
-        cpu_p.append(i['price'])
+    for cpu in cpu_select_list:
+        cpu_p.append(cpu['price'])
 
-    chosen_cpu = cpu_set[cpu_p.index(max(cpu_p))]
+    cpu_max = []
+    for cpu in cpu_select_list:
+        if cpu['price'] == max(cpu_p):
+            cpu_max.append(cpu)
+    chosen_cpu = cpu_max[0]
 
-    return chosen_cpu
+    option_list = ['1', '2']
+    if 'Intel' in chosen_cpu['name'] and 'K' in chosen_cpu['name']:
+        user_cooler_option = '1'
+    else:
+        user_cooler_option = '0'
+        while user_cooler_option not in option_list:
+            #print('Input "1" if YES')
+            #print('Input "2" if NO')
+            #user_cooler_option = input('Do you want an aftermarket CPU cooler?')
+            user_cooler_option = '1'
+    return chosen_cpu, int(user_cooler_option)
 
 
-def getmobo(compList, mobo_info, chosen_cpu):
+def getmobo(compList, mobo_info, chosen_cpu, user_input):
     '''
     '''
     # Special ASUS motherboard from 8th gen that support 9th gen intel CPU
@@ -158,7 +221,7 @@ def getmobo(compList, mobo_info, chosen_cpu):
         if motherboard['price'] < compList['motherboard']:
             mobo_dict_budget.append(
                 motherboard
-            )  # alternative list of motherboard, filtered by price
+            )  # alternative list of motherboard, filtered by price only
 
     chosen_mobo_set = []
     if 'Intel' in chosen_cpu['name']:
@@ -198,12 +261,27 @@ def getmobo(compList, mobo_info, chosen_cpu):
                 motherboard
             )  # use alternative list if the optimal list is empty
 
+    mobo_user = []
+    if user_input == 1:
+        for mobo in mobo_set:
+            if mobo['form-factor'] == 'Micro ATX':
+                mobo_user.append(mobo)
+    elif user_input == 2:
+        for mobo in mobo_set:
+            if mobo['form-factor'] == 'ATX':
+                mobo_user.append(mobo)
+    elif user_input == 3:
+        for mobo in mobo_set:
+            if mobo['form-factor'] == 'Micro ATX' or mobo['form-factor'] == 'ATX':
+                mobo_user.append(mobo)
+    # Filter motherboard size by user input
+
     mobo_p = []
-    for motherboard in mobo_set:
+    for motherboard in mobo_user:
         mobo_p.append(motherboard['price'])
 
     # pick highest value within budget
-    chosen_motherboard = mobo_set[mobo_p.index(max(mobo_p))]
+    chosen_motherboard = mobo_user[mobo_p.index(max(mobo_p))]
     return chosen_motherboard
 
 
@@ -279,10 +357,10 @@ def getram(compList, ram_info, chosen_mobo):
     # make a list thats in the same order as ram_select_set, but in terms of ram speed only
 
     ram_speed_module = []
-    for index, speed in enumerate(ram_speed_list, 0):
-        if speed == max(ram_speed_list):
-            ram_speed_module.append(ram_select_set[index])
-    # filter the ram modules with the maximum speed
+    for ram in ram_select_set:
+        if ram['speed'] == max(ram_speed_list):
+            ram_speed_module.append(ram)
+    #filter the ram modules with the maximum speed
 
     ram_price_list = []
     for ram in ram_speed_module:
@@ -290,9 +368,9 @@ def getram(compList, ram_info, chosen_mobo):
     # make a list thats in the same order as ram_select_set, but in terms of ram speed only
 
     ram_price_module = []
-    for index, price in enumerate(ram_price_list, 0):
-        if price == min(ram_price_list):
-            ram_price_module.append(ram_speed_module[index])
+    for ram in ram_speed_module:
+        if ram['price'] == min(ram_price_list):
+            ram_price_module.append(ram)
     # filter the ram modules with the minimum price
 
     chosen_ram = ram_price_module[0]
@@ -426,14 +504,16 @@ def getstor(compList, stor_info):
         if price == min(hdd_price_list):
             hdd_min_price.append(hdd_value_list[index])
 
-    if len(hdd_min_price) > 0 and hdd_min_price[0][
-            'capacity'] > 900 and 'ws' in compList['name']:
-        select_hdd = hdd_min_price[0]
+    if len(hdd_min_price) > 0 and hdd_min_price[0]['capacity'] > 900 and 'ws' in compList['name']:
+        selected_hdd = hdd_min_price[0]
+        remaining_budget = compList['storage'] - selected_ssd['price'] - selected_hdd['price']
     else:
-        select_hdd = 'NO HDD'
+        selected_hdd = 'NO HDD'
+        remaining_budget = compList['storage'] - selected_ssd['price']
     # filter a single HDD from filtered set
 
-    return [selected_ssd, select_hdd]
+    return selected_ssd, selected_hdd, remaining_budget
+
 
 
 def getpsu(compList, psu_info):
@@ -519,3 +599,261 @@ def getpsu(compList, psu_info):
 
     return chosen_psu
 
+
+def getgpu(compList, gpu_info, extra_budget, choice):
+    if compList['gpu'] == 0:
+        chosen_gpu = 'No GPU'
+    else:
+        gpu_dict = []
+        for gpu in gpu_info:
+            if gpu['price'] != '':
+                gpu_dict.append(gpu)
+        # filter out the gpu without a price
+
+        new_gpu_list = ['Radeon RX 560 - 896', 'Radeon RX 560 - 1024', 'Radeon RX 570',
+                    'GeForce GTX 1660', 'Radeon RX 580', 'GeForce GTX 1660 Ti', 'GeForce RTX 2060',
+                    'GeForce RTX 2070', 'GeForce RTX 2080', 'GeForce RTX 2080 Ti']
+        gpu_chipset_index = len(new_gpu_list)-1
+        # list the new chipset, with ascending performance ranking
+        # index will be used later for filter
+
+        gpu_new_list = []
+        for gpu in gpu_dict:
+            for chipset in new_gpu_list:
+                if gpu['chipset'] == chipset:
+                    gpu_new_list.append(gpu)
+        # filter down to GPU with new chipset only
+
+        for gpu in gpu_new_list:
+            if type(gpu['price']) != float:
+                gpu['price'] = float(gpu['price'].strip('$'))
+            if type(gpu['memory']) != float:
+                gpu['memory'] = float(gpu['memory'].strip(' GB'))
+        # moving string value and turning price and memory into float for further processing
+
+        gpu_choice_list = []
+        if choice == 3:
+            for gpu in gpu_new_list:
+                gpu_choice_list.append(gpu)
+        elif choice == 2:
+            for gpu in gpu_new_list:
+                if 'Radeon' in gpu['chipset']:
+                    gpu_choice_list.append(gpu)
+        elif choice == 1:
+            for gpu in gpu_new_list:
+                if 'GeForce' in gpu['chipset']:
+                    gpu_choice_list.append(gpu)
+        #filter out GPU by user input
+
+        temp_gpu_budget_list = []
+        temp_gpu_budget_index = gpu_chipset_index
+        temp_gpu_extra_list = []
+        temp_gpu_extra_index = gpu_chipset_index
+
+        while len(temp_gpu_extra_list) == 0:
+            for gpu in gpu_choice_list:
+                if (compList['gpu'] + extra_budget) > gpu['price']:
+                    if new_gpu_list[temp_gpu_extra_index] == gpu['chipset']:
+                        temp_gpu_extra_list.append(gpu)
+            temp_gpu_extra_index -= 1
+
+        while len(temp_gpu_budget_list) == 0:
+            for gpu in gpu_choice_list:
+                if compList['gpu'] > gpu['price']:
+                    if new_gpu_list[temp_gpu_budget_index] == gpu['chipset']:
+                        temp_gpu_budget_list.append(gpu)
+            temp_gpu_budget_index -= 1
+
+        gpu_budget_list = []
+        if temp_gpu_extra_index > temp_gpu_budget_index:
+            for gpu in temp_gpu_extra_list:
+                gpu_budget_list.append(gpu)
+            extra_budget_usage = 1
+        else:
+            for gpu in temp_gpu_budget_list:
+                gpu_budget_list.append(gpu)
+            extra_budget_usage = 0
+
+        # use the left-over budget from other components and try to get a better GPU
+        # the ranking of chipset is used to compare if the extra budget allow a significant upgrade
+        # extra budget is used only when there is a significant upgrade
+
+        gpu_mem = []
+        for gpu in gpu_budget_list:
+            gpu_mem.append(gpu['memory'])
+
+        gpu_mem_list = []
+        for gpu in gpu_budget_list:
+            if gpu['memory'] == max(gpu_mem):
+                gpu_mem_list.append(gpu)
+        # filter to GPU with most memory
+
+        gpu_price = []
+        for gpu in gpu_mem_list:
+            gpu_price.append(gpu['price'])
+
+        gpu_price_list = []
+        for gpu in gpu_mem_list:
+            if gpu['price'] == min(gpu_price):
+                gpu_price_list.append(gpu)
+        # filter to GPU with minimum price
+
+        chosen_gpu = gpu_price_list[0]
+
+    return chosen_gpu
+
+
+def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu):
+    if cooler_option == 0:
+        chosen_cooler = 'No after market cooler'
+    else:
+        pre_selected_list = ['Hyper 212 EVO', 'CRYORIG M9 Plus', 'Scythe - Ninja 5', 'CRYORIG R1', 'NH-D15', 'Dark Rock Pro 4']
+        # a pre_select list of reputable CPU cooler, with ranking ascending
+
+        cooler_list = []
+        for cooler in cooler_info:
+            for preset in pre_selected_list:
+                if cooler['price'] != '' and preset in cooler['name']:
+                    cooler_list.append(cooler)
+        # filter cooler without a price and cooler in pre-selected list
+
+        for cooler in cooler_list:
+            if type(cooler['price']) != float:
+                cooler['price'] = float(cooler['price'].strip('$'))
+        # converting price to float for further processing
+
+        if chosen_gpu == 'No GPU':
+            cooler_budget = extra_budget
+        else:
+            cooler_budget = extra_budget + compList['gpu'] - chosen_gpu['price']
+
+        cooler_budget_list = []
+        for cooler in cooler_list:
+            if cooler['price'] < cooler_budget:
+                cooler_budget_list.append(cooler)
+        # add after market cooler that is within budget
+
+        if len(cooler_budget_list) == 0:
+            cooler_price = []
+            for cooler in cooler_list:
+                cooler_price.append(cooler['price'])
+
+            cooler_price_list = []
+            for cooler in cooler_list:
+                if cooler['price'] == min(cooler_price):
+                    cooler_price_list.append(cooler)
+            # filter to cooler with minimum price
+            cooler_budget_list.append(cooler_price_list[0])
+
+        # add an after market cooler with minimum price from the list if the budget is insufficient
+
+        cooler_select_list = []
+        list_index = len(pre_selected_list) - 1
+
+        while len(cooler_select_list) == 0:
+            for cooler in cooler_budget_list:
+                if pre_selected_list[list_index] in cooler['name']:
+                    cooler_select_list.append(cooler)
+            list_index -= 1
+        # select cooler from pre-selected ranking list
+
+        cooler_min = []
+        for cooler in cooler_select_list:
+            cooler_min.append(cooler['price'])
+
+        cooler_min_list = []
+        for cooler in cooler_select_list:
+            if cooler['price'] == min(cooler_min):
+                cooler_min_list.append(cooler)
+        # filter to cooler with minimum price from this previous ranking filter
+
+        chosen_cooler = cooler_min_list[len(cooler_min_list)-1]
+        # choose the last cooler from the minimum price list
+
+    return chosen_cooler
+
+
+def getcase(compList, case_info, chosen_mobo):
+    case_list = []
+    for case in case_info:
+        if chosen_mobo['form-factor'] != 'ATX':
+            if 'MicroATX' in case['type'] and case['price'] != '':
+                case_list.append(case)
+        else:
+            if 'Test' not in case['type'] and 'Micro' not in case['type'] and 'ATX' in case[
+                'type'] and case['price'] != '':
+                case_list.append(case)
+    # Filter case based on motherboard size and remove items with empty price
+
+    for case in case_list:
+        if type(case['price']) != float:
+            case['price'] = float(case['price'].strip('$'))
+        if type(case['ratings']) != float:
+            case['ratings'] = float(case['ratings'])
+    # Turn price and rating into float for further processing
+
+    case_nocd_list = []
+    for case in case_list:
+        if case['ext525b'] == '0' and case['price'] < compList['case']:
+            case_nocd_list.append(case)
+    # Filter to case within budget and without DVD drive bay
+
+    case_brands = ['Phanteks', 'NZXT', 'Lian-Li', 'Silverstone',
+                   'Cooler Master', 'Fractal Design', 'Corsair']
+    case_sub_brands = ['Thermaltake', 'Rosewill', 'GAMDIAS']
+    case_brand_list = []
+    for case in case_nocd_list:
+        for brand in case_brands:
+            if brand in case['name']:
+                case_brand_list.append(case)
+    # Filter case from reputable brands
+
+    if len(case_brand_list) == 0:
+        for case in case_nocd_list:
+            for brand in case_sub_brands:
+                if brand in case['name']:
+                    case_brand_list.append(case)
+    # If no case available from reputable brands, use sub-par brands
+
+    case_rate_list = []
+    if len(case_brand_list) > 10:
+        rate_list = []
+        for case in case_brand_list:
+            if case['ratings'] > 0:
+                rate_list.append(case['ratings'])
+        avg_rate = sum(rate_list)/len(rate_list)
+        for case in case_brand_list:
+            if case['ratings'] >= avg_rate:
+                case_rate_list.append(case)
+    else:
+        for case in case_brand_list:
+            case_rate_list.append(case)
+    # Filter case with higher than average rating if there are more than 10 cases available
+
+    case_price_list = []
+    if len(case_rate_list) > 10:
+        case_price = []
+        for case in case_rate_list:
+            case_price.append(case['price'])
+        avg_price = sum(case_price)/len(case_price)
+        for case in case_rate_list:
+            if case['price'] > avg_price:
+                case_price_list.append(case)
+    else:
+        for case in case_rate_list:
+            case_price_list.append(case)
+    # Filter case with higher than average price if there are more than 10 cases available
+
+    case_min_list = []
+    case_min_price = []
+    for case in case_price_list:
+        case_min_price.append(case['price'])
+
+    for case in case_price_list:
+        if case['price'] == min(case_min_price):
+            case_min_list.append(case)
+
+    chosen_case = case_min_list[0]
+    # Filter to a list of case with minimum price, return the first one as chosen case.
+
+    return chosen_case
