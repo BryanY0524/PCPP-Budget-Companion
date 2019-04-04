@@ -155,7 +155,7 @@ def menu_parameter(userOption):
                                 user_Para.append(userBudget(int(userInput)))
                             break
                         else:
-                            return user_Para
+                            return [user_Para]
                 else:
                     raise ValueError("***Error: Invalid Option***")
             except ValueError as error:
