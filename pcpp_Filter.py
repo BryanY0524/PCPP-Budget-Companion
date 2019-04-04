@@ -1,5 +1,11 @@
 from PCPartPicker_API import pcpartpicker as pcpp
 import random
+from selenium import webdriver
+from selenium.webdriver import ChromeOptions, Chrome
+opts = ChromeOptions()
+opts.add_experimental_option("detach", True)
+
+import time
 
 
 def grabBuilds(compList, parameter_List, MASTER_LIST):
@@ -23,7 +29,7 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
     chosen_gpu = getgpu(compList, MASTER_LIST[4], extra_budget,
                         parameter_List[5])
     chosen_cooler = getcooler(compList, MASTER_LIST[7], extra_budget,
-                              cooler_option, chosen_gpu)
+                              cooler_option, chosen_gpu, chosen_motherboard)
 
     print(parameter_List)
     print(compList)
@@ -45,12 +51,12 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
             exist_parts.append(parts)
 
     for parts in exist_parts:
-        print(parts['name'], '-' * (45 - len(parts['name'])), parts['price'])
+        print(parts['component'], '-' * (30 - len(parts['component'])), parts['name'], '-' * (45 - len(parts['name'])), parts['price'])
     total_price = 0
     for parts in exist_parts:
         total_price += parts['price']
-    print('Total Price', '-' * (45 - len('Total Price')), total_price)
-    print('Remaining Budget', '-' * (45 - len('Remaining Budget')), parameter_List[1] - total_price)
+    print('Total Price', '-' * (78 - len('Total Price')), total_price)
+    print('Remaining Budget', '-' * (78 - len('Remaining Budget')), parameter_List[1] - total_price)
     """"
     CPU:            'speed'         'cores'
     Cooler:         'fan-rpm'       'noise level'
@@ -62,6 +68,17 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
     GPU:            'series'        'chipset'
     case:           'type'
     """
+    driver = webdriver.Chrome(chrome_options=opts)
+    driver.get("https://ca.pcpartpicker.com/list/#partlist_remove_all")
+    time.sleep(1)
+    for parts in exist_parts:
+        driver.get("https://ca.pcpartpicker.com/product/" + parts['id'] + "#add_to_part_list")
+        time.sleep(2)
+        driver.find_element_by_class_name("partlist-btn").click()
+        time.sleep(2)
+
+
+
 
 
 def getCPU(compList, cpuList, user_para):
@@ -132,7 +149,7 @@ def getCPU(compList, cpuList, user_para):
 
     cpu_set = []
     for cpu in chosen_set:
-        if cpu['price'] < compList['cpu']:
+        if cpu['price'] < 1.1 * compList['cpu']:
             cpu_set.append(cpu)
     # filter CPU within budget
 
@@ -166,6 +183,7 @@ def getCPU(compList, cpuList, user_para):
         if cpu['price'] == max(cpu_p):
             cpu_max.append(cpu)
     chosen_cpu = cpu_max[0]
+    chosen_cpu['component'] = 'CPU'
 
     option_list = ['1', '2']
     if 'Intel' in chosen_cpu['name'] and 'K' in chosen_cpu['name']:
@@ -284,7 +302,7 @@ def getmobo(compList, mobo_info, chosen_cpu, user_input):
 
     mobo_dict_budget = []
     for motherboard in mobo_dict:
-        if motherboard['price'] < compList['motherboard']:
+        if motherboard['price'] < 1.1 * compList['motherboard']:
             mobo_dict_budget.append(
                 motherboard
             )  # alternative list of motherboard, filtered by price only
@@ -306,19 +324,28 @@ def getmobo(compList, mobo_info, chosen_cpu, user_input):
     elif 'AMD' in chosen_cpu['name']:
         if 'X' in chosen_cpu['name']:
             for motherboard in mobo_dict:
-                if ('X370' in motherboard['name']) \
-                        or ('X470' in motherboard['name']) \
-                        or ('CROSSHAIR' in motherboard['name']):
-                    chosen_mobo_set.append(motherboard)
+                if '2' in chosen_cpu['name']:
+                    if ('X470' in motherboard['name']) \
+                            or ('CROSSHAIR' in motherboard['name']):
+                        chosen_mobo_set.append(motherboard)
+                else:
+                    if ('X370' in motherboard['name']) \
+                            or ('X470' in motherboard['name']) \
+                            or ('CROSSHAIR' in motherboard['name']):
+                        chosen_mobo_set.append(motherboard)
         else:
             for motherboard in mobo_dict:
-                chosen_mobo_set.append(motherboard)
+                if '2' in chosen_cpu['name']:
+                    if '4' in motherboard['name']:
+                        chosen_mobo_set.append(motherboard)
+                else:
+                    chosen_mobo_set.append(motherboard)
     # Filter a list of chosen motherboard in reasonable parameter.
     # e.g. unlocked intel CPU with overclock enabled motherboard
 
     mobo_set = []
     for motherboard in chosen_mobo_set:
-        if motherboard['price'] < compList['motherboard']:
+        if motherboard['price'] < 1.1 * compList['motherboard']:
             mobo_set.append(motherboard)  # filter by price
 
     if mobo_set == []:
@@ -343,6 +370,9 @@ def getmobo(compList, mobo_info, chosen_cpu, user_input):
                 mobo_user.append(mobo)
     # Filter motherboard size by user input
 
+    if len(mobo_user) == 0:
+        mobo_user = mobo_set
+
     mobo_p = []
     for motherboard in mobo_user:
         mobo_p.append(motherboard['price'])
@@ -354,6 +384,7 @@ def getmobo(compList, mobo_info, chosen_cpu, user_input):
     # pick motherboards within highest 10% price budget
 
     chosen_motherboard = random.choice(mobo_list)
+    chosen_motherboard['component'] = 'Motherboard'
     # choose a random motherboard from the list
     return chosen_motherboard
 
@@ -446,7 +477,7 @@ def getram(compList, ram_info, chosen_mobo):
     # pick ram modules within 15% price difference of cheapest module
 
     chosen_ram = random.choice(ram_price_modules)
-
+    chosen_ram['component'] = 'Memory'
     return chosen_ram
 
 
@@ -586,6 +617,10 @@ def getstor(compList, stor_info):
         remaining_budget = compList['storage'] - selected_ssd['price']
     # filter a single HDD from filtered set
 
+    selected_ssd['component'] = 'SSD'
+    if isinstance(selected_hdd, dict) == True:
+        selected_hdd['component'] = 'HDD'
+
     return selected_ssd, selected_hdd, remaining_budget
 
 
@@ -669,7 +704,7 @@ def getpsu(compList, psu_info):
     # filter to PSU with minimum price
 
     chosen_psu = psu_price_list[0]
-
+    chosen_psu['component'] = 'Power Supply'
     return chosen_psu
 
 
@@ -775,18 +810,32 @@ def getgpu(compList, gpu_info, extra_budget, choice):
         # filter to GPU with minimum price
 
         chosen_gpu = gpu_price_list[0]
+        if isinstance(chosen_gpu, dict) == True:
+            chosen_gpu['component'] = 'Video Card'
 
     return chosen_gpu
 
 
-def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu):
+def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu, chosen_mobo):
     if cooler_option == 0:
         chosen_cooler = 'No after market cooler'
     else:
-        pre_selected_list = [
-            'Hyper 212 EVO', 'CRYORIG M9 Plus', 'Scythe - Ninja 5',
-            'CRYORIG R1', 'NH-D15', 'Dark Rock Pro 4'
-        ]
+        if 'Micro' in chosen_mobo['form-factor']:
+            if chosen_mobo['price'] < 120:
+                pre_selected_list = [
+                    'CRYORIG M9', 'Cooler Master Hyper T4', 'CRYORIG H7'
+                ]
+            else:
+                pre_selected_list = [
+                    'CRYORIG M9', 'Cooler Master Hyper T4', 'be quiet! Shadow Rock LP',
+                    'Noctua NH-L9', 'CRYORIG H7'
+                ]
+        else:
+            pre_selected_list = [
+                'Hyper 212 EVO', 'CRYORIG M9 Plus', 'Scythe - Ninja 5',
+                'CRYORIG R1', 'NH-D15', 'Dark Rock Pro 4', 'Cooler Master Hyper T4'
+            ]
+
         # a pre_select list of reputable CPU cooler, with ranking ascending
 
         cooler_list = []
@@ -835,6 +884,9 @@ def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu):
             if cooler['price'] > 0.75 * max(cooler_p):
                 cooler_p_list.append(cooler)
         chosen_cooler = random.choice(cooler_p_list)
+
+        if isinstance(chosen_cooler, dict) == True:
+            chosen_cooler['component'] = 'CPU Cooler'
     return chosen_cooler
 
 
@@ -842,7 +894,7 @@ def getcase(compList, case_info, chosen_mobo):
     case_list = []
     for case in case_info:
         if chosen_mobo['form-factor'] != 'ATX':
-            if 'MicroATX' in case['type'] and case['price'] != '':
+            if 'MicroATX' in case['type'] and case['price'] != '' and 'Mini' not in case['type']:
                 case_list.append(case)
         else:
             if 'Test' not in case['type'] and 'Micro' not in case[
@@ -859,15 +911,19 @@ def getcase(compList, case_info, chosen_mobo):
 
     case_nocd_list = []
     for case in case_list:
-        if case['ext525b'] == '0' and case['price'] < compList['case']:
-            case_nocd_list.append(case)
+        if compList['case'] < 100:
+            if case['price'] < 1.2 * compList['case']:
+                case_nocd_list.append(case)
+        else:
+            if case['ext525b'] == '0' and case['price'] < 1.2 * compList['case']:
+                case_nocd_list.append(case)
     # Filter to case within budget and without DVD drive bay
 
     case_brands = [
-        'Phanteks', 'NZXT', 'Lian-Li', 'Silverstone', 'Cooler Master',
-        'Fractal Design', 'Corsair', 'Antec - TORQUE', 'Cougar Conquer'
+        'Phanteks', 'NZXT', 'Cooler Master',
+        'Fractal Design', 'Corsair'
     ]
-    case_sub_brands = ['Thermaltake', 'Rosewill', 'GAMDIAS']
+    case_sub_brands = ['Thermaltake', 'Rosewill']
     case_brand_list = []
     for case in case_nocd_list:
         for brand in case_brands:
@@ -893,7 +949,7 @@ def getcase(compList, case_info, chosen_mobo):
     # pick case within highest 25% price budget
 
     chosen_case = random.choice(case_p_list)
-
+    chosen_case['component'] = 'Computer Case'
     return chosen_case
 
 

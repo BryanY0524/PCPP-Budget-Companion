@@ -2,12 +2,12 @@ def giveFormula(option, budget):
     budget_list = ({
         'name': 'gen1',
         'cpu': 0.35,
-        'motherboard': 0.15,
+        'motherboard': 0.14,
         'memory': 0.15,
         'gpu': 0,
         'storage': 0.15,
-        'psu': 0.10,
-        'case': 0.10
+        'psu': 0.09,
+        'case': 0.12
     },
         {
         'name': 'gen2',
