@@ -15,10 +15,10 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
     chosen_psu = getpsu(compList, MASTER_LIST[6])
     chosen_case = getcase(compList, MASTER_LIST[5], chosen_motherboard)
     extra_budget = (compList['cpu'] - chosen_cpu['price']) + (
-        compList['motherboard'] - chosen_motherboard['price']) + (
-            compList['memory'] - chosen_ram['price']) + (
-                compList['storage'] - storage_list[2]) + (
-                    compList['psu'] - chosen_psu['price'])
+            compList['motherboard'] - chosen_motherboard['price']) + (
+                           compList['memory'] - chosen_ram['price']) + storage_list[2] + (
+                           compList['psu'] - chosen_psu['price']) + (
+                           compList['case'] - chosen_case['price'])
 
     chosen_gpu = getgpu(compList, MASTER_LIST[4], extra_budget,
                         parameter_List[5])
@@ -27,6 +27,7 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
 
     print(parameter_List)
     print(compList)
+
     print(chosen_cpu)
     print(chosen_cooler)
     print(chosen_motherboard)
@@ -36,6 +37,31 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
     print(chosen_psu)
     print(chosen_gpu)
     print(chosen_case)
+
+    all_parts = [chosen_cpu, chosen_cooler, chosen_motherboard, chosen_ram, chosen_gpu, chosen_ssd, chosen_hdd, chosen_psu, chosen_case]
+    exist_parts = []
+    for parts in all_parts:
+        if isinstance(parts, dict) == True:
+            exist_parts.append(parts)
+
+    for parts in exist_parts:
+        print(parts['name'], '-' * (45 - len(parts['name'])), parts['price'])
+    total_price = 0
+    for parts in exist_parts:
+        total_price += parts['price']
+    print('Total Price', '-' * (45 - len('Total Price')), total_price)
+    print('Remaining Budget', '-' * (45 - len('Remaining Budget')), parameter_List[1] - total_price)
+    """"
+    CPU:            'speed'         'cores'
+    Cooler:         'fan-rpm'       'noise level'
+    Motherboard:    'form-factor'   'ram-slots'
+    Memory:         'speed'         'cas'           'modules'       'size'
+    SSD:            'series'        'form'          'capacity'
+    HDD:            'series'        'form'          'capacity'
+    PSU:            'series'        'efficiency'    'watts'         'modular'
+    GPU:            'series'        'chipset'
+    case:           'type'
+    """
 
 
 def getCPU(compList, cpuList, user_para):
@@ -415,9 +441,9 @@ def getram(compList, ram_info, chosen_mobo):
 
     ram_price_modules = []
     for ram in ram_speed_module:
-        if ram['price'] > 0.90 * (max(ram_price_list)):
+        if ram['price'] < 1.15 * (min(ram_price_list)):
             ram_price_modules.append(ram)
-    # pick ram modules within highest 10% price budget
+    # pick ram modules within 15% price difference of cheapest module
 
     chosen_ram = random.choice(ram_price_modules)
 
@@ -702,7 +728,7 @@ def getgpu(compList, gpu_info, extra_budget, choice):
 
         while len(temp_gpu_extra_list) == 0:
             for gpu in gpu_choice_list:
-                if (compList['gpu'] + extra_budget) > gpu['price']:
+                if (compList['gpu'] + extra_budget*1.1) > gpu['price']:
                     if new_gpu_list[temp_gpu_extra_index] == gpu['chipset']:
                         temp_gpu_extra_list.append(gpu)
             temp_gpu_extra_index -= 1
@@ -775,14 +801,14 @@ def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu):
                 cooler['price'] = float(cooler['price'].strip('$'))
         # converting price to float for further processing
 
-        if chosen_gpu == 'No GPU':
+        if compList['gpu'] == 0:
             cooler_budget = extra_budget
         else:
             cooler_budget = extra_budget + compList['gpu'] - chosen_gpu['price']
 
         cooler_budget_list = []
         for cooler in cooler_list:
-            if cooler['price'] < cooler_budget:
+            if cooler['price'] < cooler_budget * 1.35:
                 cooler_budget_list.append(cooler)
         # add after market cooler that is within budget
 
@@ -800,29 +826,15 @@ def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu):
 
         # add an after market cooler with minimum price from the list if the budget is insufficient
 
-        cooler_select_list = []
-        list_index = len(pre_selected_list) - 1
+        cooler_p = []
+        cooler_p_list = []
+        for cooler in cooler_budget_list:
+            cooler_p.append(cooler['price'])
 
-        while len(cooler_select_list) == 0:
-            for cooler in cooler_budget_list:
-                if pre_selected_list[list_index] in cooler['name']:
-                    cooler_select_list.append(cooler)
-            list_index -= 1
-        # select cooler from pre-selected ranking list
-
-        cooler_min = []
-        for cooler in cooler_select_list:
-            cooler_min.append(cooler['price'])
-
-        cooler_min_list = []
-        for cooler in cooler_select_list:
-            if cooler['price'] == min(cooler_min):
-                cooler_min_list.append(cooler)
-        # filter to cooler with minimum price from this previous ranking filter
-
-        chosen_cooler = cooler_min_list[len(cooler_min_list) - 1]
-        # choose the last cooler from the minimum price list
-
+        for cooler in cooler_budget_list:
+            if cooler['price'] > 0.75 * max(cooler_p):
+                cooler_p_list.append(cooler)
+        chosen_cooler = random.choice(cooler_p_list)
     return chosen_cooler
 
 
