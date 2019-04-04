@@ -1,4 +1,5 @@
 from PCPartPicker_API import pcpartpicker as pcpp
+import random
 
 
 def grabBuilds(compList, parameter_List, MASTER_LIST):
@@ -320,8 +321,14 @@ def getmobo(compList, mobo_info, chosen_cpu, user_input):
     for motherboard in mobo_user:
         mobo_p.append(motherboard['price'])
 
-    # pick highest value within budget
-    chosen_motherboard = mobo_user[mobo_p.index(max(mobo_p))]
+    mobo_list = []
+    for mobo in mobo_user:
+        if mobo['price'] > 0.9 * (max(mobo_p)):
+            mobo_list.append(mobo)
+    # pick motherboards within highest 10% price budget
+
+    chosen_motherboard = random.choice(mobo_list)
+    # choose a random motherboard from the list
     return chosen_motherboard
 
 
@@ -405,15 +412,14 @@ def getram(compList, ram_info, chosen_mobo):
     ram_price_list = []
     for ram in ram_speed_module:
         ram_price_list.append(ram['price'])
-    # make a list thats in the same order as ram_select_set, but in terms of ram speed only
 
-    ram_price_module = []
+    ram_price_modules = []
     for ram in ram_speed_module:
-        if ram['price'] == min(ram_price_list):
-            ram_price_module.append(ram)
-    # filter the ram modules with the minimum price
+        if ram['price'] > 0.90 * (max(ram_price_list)):
+            ram_price_modules.append(ram)
+    # pick ram modules within highest 10% price budget
 
-    chosen_ram = ram_price_module[0]
+    chosen_ram = random.choice(ram_price_modules)
 
     return chosen_ram
 
@@ -545,7 +551,7 @@ def getstor(compList, stor_info):
             hdd_min_price.append(hdd_value_list[index])
 
     if len(hdd_min_price) > 0 and hdd_min_price[0][
-            'capacity'] > 900 and 'ws' in compList['name']:
+            'capacity'] > 900:
         selected_hdd = hdd_min_price[0]
         remaining_budget = compList['storage'] - selected_ssd[
             'price'] - selected_hdd['price']
@@ -847,7 +853,7 @@ def getcase(compList, case_info, chosen_mobo):
 
     case_brands = [
         'Phanteks', 'NZXT', 'Lian-Li', 'Silverstone', 'Cooler Master',
-        'Fractal Design', 'Corsair'
+        'Fractal Design', 'Corsair', 'Antec - TORQUE', 'Cougar Conquer'
     ]
     case_sub_brands = ['Thermaltake', 'Rosewill', 'GAMDIAS']
     case_brand_list = []
@@ -864,45 +870,18 @@ def getcase(compList, case_info, chosen_mobo):
                     case_brand_list.append(case)
     # If no case available from reputable brands, use sub-par brands
 
-    case_rate_list = []
-    if len(case_brand_list) > 10:
-        rate_list = []
-        for case in case_brand_list:
-            if case['ratings'] > 0:
-                rate_list.append(case['ratings'])
-        avg_rate = sum(rate_list) / len(rate_list)
-        for case in case_brand_list:
-            if case['ratings'] >= avg_rate:
-                case_rate_list.append(case)
-    else:
-        for case in case_brand_list:
-            case_rate_list.append(case)
-    # Filter case with higher than average rating if there are more than 10 cases available
+    case_p = []
+    for case in case_brand_list:
+        case_p.append(case['price'])
 
-    case_price_list = []
-    if len(case_rate_list) > 10:
-        case_price = []
-        for case in case_rate_list:
-            case_price.append(case['price'])
-        avg_price = sum(case_price) / len(case_price)
-        for case in case_rate_list:
-            if case['price'] > avg_price:
-                case_price_list.append(case)
-    else:
-        for case in case_rate_list:
-            case_price_list.append(case)
-    # Filter case with higher than average price if there are more than 10 cases available
+    case_p_list = []
+    for case in case_brand_list:
+        if case['price'] > 0.75 * (max(case_p)):
+            case_p_list.append(case)
+    # pick case within highest 25% price budget
 
-    case_min_list = []
-    case_min_price = []
-    for case in case_price_list:
-        case_min_price.append(case['price'])
-
-    for case in case_price_list:
-        if case['price'] == min(case_min_price):
-            case_min_list.append(case)
-
-    chosen_case = case_min_list[0]
-    # Filter to a list of case with minimum price, return the first one as chosen case.
+    chosen_case = random.choice(case_p_list)
 
     return chosen_case
+
+
