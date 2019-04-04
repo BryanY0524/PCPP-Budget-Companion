@@ -828,12 +828,12 @@ def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu, ch
             else:
                 pre_selected_list = [
                     'CRYORIG M9', 'Cooler Master Hyper T4', 'be quiet! Shadow Rock LP',
-                    'Noctua NH-L9', 'CRYORIG H7'
+                    'CRYORIG H7'
                 ]
         else:
             pre_selected_list = [
-                'Hyper 212 EVO', 'CRYORIG M9 Plus', 'Scythe - Ninja 5',
-                'CRYORIG R1', 'NH-D15', 'Dark Rock Pro 4', 'Cooler Master Hyper T4'
+                'Hyper 212 EVO', 'CRYORIG M9 Plus', 'Scythe - Ninja 5', 'NH-D15', 'Dark Rock Pro 4',
+                'Cooler Master Hyper T4'
             ]
 
         # a pre_select list of reputable CPU cooler, with ranking ascending
