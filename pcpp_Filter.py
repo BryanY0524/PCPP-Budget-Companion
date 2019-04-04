@@ -45,7 +45,7 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
             exist_parts.append(parts)
 
     for parts in exist_parts:
-        print(parts['name'], '-' * (45 - len(parts['name'])), parts['price'])
+        print(parts['component'], '-' * (30 - len(parts['component'])), parts['name'], '-' * (45 - len(parts['name'])), parts['price'])
     total_price = 0
     for parts in exist_parts:
         total_price += parts['price']
@@ -166,6 +166,7 @@ def getCPU(compList, cpuList, user_para):
         if cpu['price'] == max(cpu_p):
             cpu_max.append(cpu)
     chosen_cpu = cpu_max[0]
+    chosen_cpu['component'] = 'CPU'
 
     option_list = ['1', '2']
     if 'Intel' in chosen_cpu['name'] and 'K' in chosen_cpu['name']:
@@ -354,6 +355,7 @@ def getmobo(compList, mobo_info, chosen_cpu, user_input):
     # pick motherboards within highest 10% price budget
 
     chosen_motherboard = random.choice(mobo_list)
+    chosen_motherboard['component'] = 'Motherboard'
     # choose a random motherboard from the list
     return chosen_motherboard
 
@@ -446,7 +448,7 @@ def getram(compList, ram_info, chosen_mobo):
     # pick ram modules within 15% price difference of cheapest module
 
     chosen_ram = random.choice(ram_price_modules)
-
+    chosen_ram['component'] = 'Memory'
     return chosen_ram
 
 
@@ -586,6 +588,10 @@ def getstor(compList, stor_info):
         remaining_budget = compList['storage'] - selected_ssd['price']
     # filter a single HDD from filtered set
 
+    selected_ssd['component'] = 'SSD'
+    if isinstance(selected_hdd, dict) == True:
+        selected_hdd['component'] = 'HDD'
+
     return selected_ssd, selected_hdd, remaining_budget
 
 
@@ -669,7 +675,7 @@ def getpsu(compList, psu_info):
     # filter to PSU with minimum price
 
     chosen_psu = psu_price_list[0]
-
+    chosen_psu['component'] = 'Power Supply'
     return chosen_psu
 
 
@@ -775,6 +781,8 @@ def getgpu(compList, gpu_info, extra_budget, choice):
         # filter to GPU with minimum price
 
         chosen_gpu = gpu_price_list[0]
+        if isinstance(chosen_gpu, dict) == True:
+            chosen_gpu['component'] = 'Video Card'
 
     return chosen_gpu
 
@@ -835,6 +843,9 @@ def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu):
             if cooler['price'] > 0.75 * max(cooler_p):
                 cooler_p_list.append(cooler)
         chosen_cooler = random.choice(cooler_p_list)
+
+        if isinstance(chosen_cooler, dict) == True:
+            chosen_cooler['component'] = 'CPU Cooler'
     return chosen_cooler
 
 
@@ -893,7 +904,7 @@ def getcase(compList, case_info, chosen_mobo):
     # pick case within highest 25% price budget
 
     chosen_case = random.choice(case_p_list)
-
+    chosen_case['component'] = 'Computer Case'
     return chosen_case
 
 
