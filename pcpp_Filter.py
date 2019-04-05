@@ -56,8 +56,8 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
     total_price = 0
     for parts in exist_parts:
         total_price += parts['price']
-    print('Total Price', '-' * (78 - len('Total Price')), total_price)
-    print('Remaining Budget', '-' * (78 - len('Remaining Budget')),
+    print('Total Price', '-' * (77 - len('Total Price')), total_price)
+    print('Remaining Budget', '-' * (77 - len('Remaining Budget')),
           parameter_List[1] - total_price)
 
     driver = webdriver.Chrome(chrome_options=opts)

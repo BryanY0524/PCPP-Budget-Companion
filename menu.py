@@ -67,7 +67,6 @@ def startMenu():
     -   User-based parameter List(Desktop Type, User Budget)
     '''
     exposition()  # Load Exposition of TUI
-    print("At anytime in the program, enter \"q\" or \"Q\" to quit...")
     print("---Option 1: Start Creating Custom Desktop with Guided Parameters")
     print("---Option 2: Create Desktop Based on Type")
     print("---Option 3: Update Local Files")
@@ -84,9 +83,15 @@ def startMenu():
             print("This will take several minutes...")
             pcpp_Scrape.update()
             print("The Update is finished")
-            print("The program will End in 5 seconds")
-            print("Please Restart the program to Build Your computer")
+            print("The program will Reinitialize in 5 seconds")
             time.sleep(5)
+            parameter_List = startMenu()
+
+            for lists in parameter_List:
+                compList = budget_Formula.giveFormula(lists[0], lists[1])
+                pcpp_Filter.grabBuilds(compList, lists, MASTER_LIST)
+                drawline()
+                # After the Update, the program will return to Start menu
         else:
             raise ValueError("***Error: Invalid Option***")
     except ValueError as error:
