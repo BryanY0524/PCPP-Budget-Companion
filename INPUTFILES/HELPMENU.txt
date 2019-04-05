@@ -1,5 +1,0 @@
-Home Office: Home Office type builds
-
-Gaming Desktop: Gaming builds
-
-Media Editing Workstation: Media Editing Workstation builds

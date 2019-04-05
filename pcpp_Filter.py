@@ -1,11 +1,10 @@
+import time
 from PCPartPicker_API import pcpartpicker as pcpp
 import random
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions, Chrome
 opts = ChromeOptions()
 opts.add_experimental_option("detach", True)
-
-import time
 
 
 def grabBuilds(compList, parameter_List, MASTER_LIST):
@@ -21,10 +20,10 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
     chosen_psu = getpsu(compList, MASTER_LIST[6])
     chosen_case = getcase(compList, MASTER_LIST[5], chosen_motherboard)
     extra_budget = (compList['cpu'] - chosen_cpu['price']) + (
-            compList['motherboard'] - chosen_motherboard['price']) + (
-                           compList['memory'] - chosen_ram['price']) + storage_list[2] + (
-                           compList['psu'] - chosen_psu['price']) + (
-                           compList['case'] - chosen_case['price'])
+        compList['motherboard'] - chosen_motherboard['price']) + (
+        compList['memory'] - chosen_ram['price']) + storage_list[2] + (
+        compList['psu'] - chosen_psu['price']) + (
+        compList['case'] - chosen_case['price'])
 
     chosen_gpu = getgpu(compList, MASTER_LIST[4], extra_budget,
                         parameter_List[5])
@@ -33,7 +32,6 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
 
     print(parameter_List)
     print(compList)
-
     print(chosen_cpu)
     print(chosen_cooler)
     print(chosen_motherboard)
@@ -44,19 +42,23 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
     print(chosen_gpu)
     print(chosen_case)
 
-    all_parts = [chosen_cpu, chosen_cooler, chosen_motherboard, chosen_ram, chosen_gpu, chosen_ssd, chosen_hdd, chosen_psu, chosen_case]
+    all_parts = [chosen_cpu, chosen_cooler, chosen_motherboard, chosen_ram,
+                 chosen_gpu, chosen_ssd, chosen_hdd, chosen_psu, chosen_case]
     exist_parts = []
+
     for parts in all_parts:
-        if isinstance(parts, dict) == True:
+        if isinstance(parts, dict) is True:
             exist_parts.append(parts)
 
     for parts in exist_parts:
-        print(parts['component'], '-' * (30 - len(parts['component'])), parts['name'], '-' * (45 - len(parts['name'])), parts['price'])
+        print(parts['component'], '-' * (30 - len(parts['component'])),
+              parts['name'], '-' * (45 - len(parts['name'])), parts['price'])
     total_price = 0
     for parts in exist_parts:
         total_price += parts['price']
     print('Total Price', '-' * (78 - len('Total Price')), total_price)
-    print('Remaining Budget', '-' * (78 - len('Remaining Budget')), parameter_List[1] - total_price)
+    print('Remaining Budget', '-' * (78 - len('Remaining Budget')),
+          parameter_List[1] - total_price)
     """"
     CPU:            'speed'         'cores'
     Cooler:         'fan-rpm'       'noise level'
@@ -72,13 +74,11 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
     driver.get("https://ca.pcpartpicker.com/list/#partlist_remove_all")
     time.sleep(1)
     for parts in exist_parts:
-        driver.get("https://ca.pcpartpicker.com/product/" + parts['id'] + "#add_to_part_list")
+        driver.get("https://ca.pcpartpicker.com/product/" +
+                   parts['id'] + "#add_to_part_list")
         time.sleep(2)
         driver.find_element_by_class_name("partlist-btn").click()
         time.sleep(2)
-
-
-
 
 
 def getCPU(compList, cpuList, user_para):
@@ -191,13 +191,16 @@ def getCPU(compList, cpuList, user_para):
     else:
         user_cooler_option = '0'
         while user_cooler_option not in option_list:
+            print('Do you want an aftermarket CPU cooler?')
             print('Option 1 -- YES')
             print('Option 2 -- NO')
-            user_cooler_option = input('Do you want an aftermarket CPU cooler?')
+            user_cooler_option = input("Please choose an option: ")
             if user_cooler_option not in option_list:
                 print('***Invalid Option***')
-                print('***Please Try Again***')
-            #user_cooler_option = '1'
+            # user_cooler_option = '1'
+    ln_Symbol = "*"  # Symbol for line drawing
+    ln_Length = 134  # Length of symbol drawing
+    print(ln_Symbol * ln_Length)
     return chosen_cpu, int(user_cooler_option)
 
 
@@ -464,7 +467,7 @@ def getram(compList, ram_info, chosen_mobo):
     for ram in ram_select_set:
         if ram['speed'] == max(ram_speed_list):
             ram_speed_module.append(ram)
-    #filter the ram modules with the maximum speed
+    # filter the ram modules with the maximum speed
 
     ram_price_list = []
     for ram in ram_speed_module:
@@ -656,13 +659,13 @@ def getpsu(compList, psu_info):
         for psu in psu_brand_list:
             if 600 >= psu['watts'] >= 300:
                 psu_list.append(psu)
-    #filter PSU wattage base on whether the build has a GPU or not, and limit maximum and minimum
+    # filter PSU wattage base on whether the build has a GPU or not, and limit maximum and minimum
 
     psu_budget_list = []
     for psu in psu_list:
         if psu['price'] < compList['psu']:
             psu_budget_list.append(psu)
-    #filter out price that is out of budget
+    # filter out price that is out of budget
 
     efficiency_index_max = 3
     efficiency_rank = ['Bronze', 'Gold', 'Platinum', 'Titanium']
@@ -681,7 +684,7 @@ def getpsu(compList, psu_info):
             if modular_rank[modular_index_max] == psu['modular']:
                 psu_mod_list.append(psu)
         modular_index_max -= 1
-    #filter our a list of best efficiency
+    # filter our a list of best efficiency
 
     psu_watt = []
     for psu in psu_mod_list:
@@ -754,7 +757,7 @@ def getgpu(compList, gpu_info, extra_budget, choice):
             for gpu in gpu_new_list:
                 if 'GeForce' in gpu['chipset']:
                     gpu_choice_list.append(gpu)
-        #filter out GPU by user input
+        # filter out GPU by user input
 
         temp_gpu_budget_list = []
         temp_gpu_budget_index = gpu_chipset_index
@@ -853,7 +856,8 @@ def getcooler(compList, cooler_info, extra_budget, cooler_option, chosen_gpu, ch
         if compList['gpu'] == 0:
             cooler_budget = extra_budget
         else:
-            cooler_budget = extra_budget + compList['gpu'] - chosen_gpu['price']
+            cooler_budget = extra_budget + \
+                compList['gpu'] - chosen_gpu['price']
 
         cooler_budget_list = []
         for cooler in cooler_list:
@@ -951,5 +955,3 @@ def getcase(compList, case_info, chosen_mobo):
     chosen_case = random.choice(case_p_list)
     chosen_case['component'] = 'Computer Case'
     return chosen_case
-
-

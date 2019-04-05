@@ -1,7 +1,6 @@
 import budget_Formula
 import pcpp_Scrape
 import pcpp_Filter
-import sys
 
 
 def drawline():
@@ -57,13 +56,6 @@ def exposition():
         "                                                                   ")
     print("\n\nCreated By: Jimmy Ho, Bryan Yuen, Charles Harold Llanto")
     drawline()
-    print("Welcome to Desktop Builder")
-    print("The purpose of this program is to:")
-    print("---Assist those that are either novices or veterans at computer" +
-          " building and provide useful tools that can be applicable at a" +
-          " lower and higher level of understanding.")
-    print("\nThis is why we decided to do this ASDKAJSLDKAJSDLKAJSDLJKASD")
-    drawline()
     print("-" * symbol_Length + "Menu" + "-" * symbol_Length)
 
 
@@ -79,23 +71,22 @@ def startMenu():
     print("---Option 2: Create Desktop Based on Type")
     print("---Option 3: Update Local Files")
     menuSelect = input("Select an option: ")
-    while menuSelect.lower() != "q":
-        # Parses and validates user menu option, entering q quits program
-        try:
-            if menuSelect == "1":
-                return menu_parameter(0)  # Returns Parameter List
-            elif menuSelect == "2":
-                return menu_parameter(1)  # Returns Parameter List
-            elif menuSelect == "3":
-                input("Press enter to update...")
-                print("Please wait for program to finish scraping data")
-                print("This will take several minutes...")
-                pcpp_Scrape.update()
-            else:
-                raise ValueError("***Error: Invalid Option***")
-        except ValueError as error:
-            print(error)
-            menuSelect = input("Select an option: ")  # Prompt user for input
+    # Parses and validates user menu option
+    try:
+        if menuSelect is "1":
+            return menu_parameter(0)  # Returns Parameter List
+        elif menuSelect is "2":
+            return menu_parameter(1)  # Returns Parameter List
+        elif menuSelect is "3":
+            input("Press enter to update...")
+            print("Please wait for program to finish scraping data")
+            print("This will take several minutes...")
+            pcpp_Scrape.update()
+        else:
+            raise ValueError("***Error: Invalid Option***")
+    except ValueError as error:
+        print(error)
+        menuSelect = input("Select an option: ")  # Prompt user for input
     exit()
 
 
@@ -123,42 +114,47 @@ def menu_parameter(userOption):
     skip = 0
     AMT_OF_Q = len(para_Option)
     for num in range(1, AMT_OF_Q + 2):
+        errorTrack = False  # Tracks error in menu
         if num + skip < AMT_OF_Q + 1:
             print(para_Q["Q" + str(num + skip)])
             for index, items in enumerate(para_Option["p" + str(num + skip)]):
                 print("---Option", str(index + 1) + ":", items)
             userInput = input("Please choose an option: ")
-        while userInput.lower() != "q":
+        while errorTrack is False:
             try:
-                if int(userInput) > 0 and int(userInput) < 4:
+                if str.isdigit(userInput) is False:
+                    raise ValueError("***Error: Invalid Value***")
+                elif int(userInput) > 0 and int(userInput) < 4:
                     drawline()
-                    if userOption == 1:
+                    if userOption is 1:
                         budget = userBudget(int(userInput))
                         user_Para = [
                             (userInput, budget, 1, 3, 3,
-                             3),  # AMD Build Option
+                                3),  # AMD Build Option
                             (userInput, budget, 2, 3, 3, 3)  # Intel Option
                         ]
+                        errorTrack = True
                         return user_Para
                     else:
                         if len(user_Para) < AMT_OF_Q + 1:
                             user_Para.append(int(userInput))
-                            if user_Para[0] == 1:  # General Usage Option
-                                if num == 3:  # Skip GPU Question
+                            if user_Para[0] is 1:  # General Usage Option
+                                if num is 3:  # Skip GPU Question
                                     user_Para.append(3)
                                     skip += 1
-                            if len(user_Para) == 3 and int(
-                                    userInput) == 1:  # AMD
+                            if len(user_Para) is 3 and int(
+                                    userInput) is 1:  # AMD
                                 user_Para.append(3)  # Append Default Overclock
                                 skip += 1
-                            if num == 1:
+                            if num is 1:
                                 user_Para.append(userBudget(int(userInput)))
-                            break
+                            errorTrack = True
                         else:
                             return [user_Para]
+                            errorTrack = True
                 else:
                     raise ValueError("***Error: Invalid Option***")
-            except ValueError as error:
+            except (ValueError, TypeError) as error:
                 print(error)
                 userInput = input("Please choose an option: ")
 
@@ -167,15 +163,15 @@ def userBudget(option):
     '''
     Filler Description
     '''
-    budgetFloor = [500, 700, 1000, 0]
+    budgetFloor = [500, 700, 1000]
     budgetStatus = True
     budget = input("Enter your budget: ")
     while str(budget).lower() != "q":
         # Parses and validates user budget
-        budget = float(budget)
         try:
+            budget = float(budget)
             while budgetStatus:
-                if budget < budgetFloor[option - 1]:
+                if budget < budgetFloor[option - 1] and type(budget) is float:
                     print("Please make sure your input is more than $%.2f" %
                           budgetFloor[option - 1])
                     budget = float(input("Enter your budget: "))
@@ -190,35 +186,11 @@ def userBudget(option):
     return budget
 
 
-def help_parameter():
-    helpDirectory = []
-    with open("HELPMENU.txt", "r") as textFile:
-        helpDirectory.append(textFile.readlines())
-    print(helpDirectory)
-
-
 MASTER_LIST = pcpp_Scrape.read_JSON()
-# (CPU, Motherboard, Memory, Storage, GPU, Case, PSU)
-# testvalues = [(1, 500), (1, 1000), (2, 700), (2, 3000), (2, 2000), (2, 2500),
-#              (2, 3000), (3, 1000), (3, 3000), (3, 2000), (3, 3000)]
-# testvalues = [['1', 500, 3, 3, 3, 3], ['1', 1000, 3, 3, 3, 3], ['2', 700, 3, 3, 3, 3],
-#              ['2', 3000, 3, 3, 3, 3], ['2', 2000, 3, 3, 3, 3], ['2', 2500, 3, 3, 3, 3],
-#              ['2', 3000, 3, 3, 3, 3], ['3', 1000, 3, 3, 3, 3], ['3', 2000, 3, 3, 3, 3],
-#              ['3', 3000, 3, 3, 3, 3]]
-testvalues = [['2', 3000, 1, 1, 3, 3], ['2', 3000, 1, 2, 3, 3],
-              ['2', 3000, 1, 3, 3, 3], ['2', 3000, 2, 1, 3, 3],
-              ['2', 3000, 2, 2, 3, 3], ['2', 3000, 2, 3, 3, 3],
-              ['2', 3000, 3, 1, 1, 3], ['2', 3000, 3, 2, 1, 3],
-              ['2', 3000, 3, 3, 1, 3]]
-choice = input("Test option (1 = menu) (2 = test): ")
-if choice == "1":
-    parameter_List = startMenu()
-    for lists in parameter_List:
-        compList = budget_Formula.giveFormula(lists[0], lists[1])
-        pcpp_Filter.grabBuilds(compList, lists, MASTER_LIST)
-        drawline()
+# (CPU, Motherboard, Memory, Storage, GPU, Case, PSU, CPU Cooler)
 
-if choice == "2":
-    for testsubject in testvalues:
-        compList = budget_Formula.giveFormula(testsubject[0], testsubject[1])
-        pcpp_Filter.grabBuilds(compList, testsubject, MASTER_LIST)
+parameter_List = startMenu()
+for lists in parameter_List:
+    compList = budget_Formula.giveFormula(lists[0], lists[1])
+    pcpp_Filter.grabBuilds(compList, lists, MASTER_LIST)
+    drawline()
