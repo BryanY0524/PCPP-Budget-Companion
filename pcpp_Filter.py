@@ -59,17 +59,7 @@ def grabBuilds(compList, parameter_List, MASTER_LIST):
     print('Total Price', '-' * (78 - len('Total Price')), total_price)
     print('Remaining Budget', '-' * (78 - len('Remaining Budget')),
           parameter_List[1] - total_price)
-    """"
-    CPU:            'speed'         'cores'
-    Cooler:         'fan-rpm'       'noise level'
-    Motherboard:    'form-factor'   'ram-slots'
-    Memory:         'speed'         'cas'           'modules'       'size'
-    SSD:            'series'        'form'          'capacity'
-    HDD:            'series'        'form'          'capacity'
-    PSU:            'series'        'efficiency'    'watts'         'modular'
-    GPU:            'series'        'chipset'
-    case:           'type'
-    """
+
     driver = webdriver.Chrome(chrome_options=opts)
     driver.get("https://ca.pcpartpicker.com/list/#partlist_remove_all")
     time.sleep(1)
@@ -194,10 +184,10 @@ def getCPU(compList, cpuList, user_para):
             print('Do you want an aftermarket CPU cooler?')
             print('Option 1 -- YES')
             print('Option 2 -- NO')
-            user_cooler_option = input("Please choose an option: ")
-            if user_cooler_option not in option_list:
-                print('***Invalid Option***')
-            # user_cooler_option = '1'
+            #user_cooler_option = input("Please choose an option: ")
+            #if user_cooler_option not in option_list:
+            #    print('***Invalid Option***')
+            user_cooler_option = '1'
     ln_Symbol = "*"  # Symbol for line drawing
     ln_Length = 134  # Length of symbol drawing
     print(ln_Symbol * ln_Length)
@@ -271,7 +261,7 @@ def getmobo(compList, mobo_info, chosen_cpu, user_input):
     ]
     # Parameter for all motherboard that support intel 8th gen CPU
 
-    AMD_PARA = ['A320', 'B350', 'B450', 'X370', 'X470', 'Asus CROSSHAIR VI ']
+    AMD_PARA = ['A320', 'B350', 'B450', 'X370', 'X470', 'Asus CROSSHAIR VI']
     # Parameter for all motherboard that support AMD Ryzen CPU
 
     INTEL_8_CPU = ['Intel Core i3-8', 'Intel Core i5-8', 'Intel Core i7-8']
@@ -329,7 +319,7 @@ def getmobo(compList, mobo_info, chosen_cpu, user_input):
             for motherboard in mobo_dict:
                 if '2' in chosen_cpu['name']:
                     if ('X470' in motherboard['name']) \
-                            or ('CROSSHAIR' in motherboard['name']):
+                            or ('CROSSHAIR VII' in motherboard['name']):
                         chosen_mobo_set.append(motherboard)
                 else:
                     if ('X370' in motherboard['name']) \

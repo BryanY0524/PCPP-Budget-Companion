@@ -1,6 +1,7 @@
 import budget_Formula
 import pcpp_Scrape
 import pcpp_Filter
+import time
 
 
 def drawline():
@@ -82,6 +83,10 @@ def startMenu():
             print("Please wait for program to finish scraping data")
             print("This will take several minutes...")
             pcpp_Scrape.update()
+            print("The Update is finished")
+            print("The program will End in 5 seconds")
+            print("Please Restart the program to Build Your computer")
+            time.sleep(5)
         else:
             raise ValueError("***Error: Invalid Option***")
     except ValueError as error:
@@ -189,7 +194,10 @@ def userBudget(option):
 MASTER_LIST = pcpp_Scrape.read_JSON()
 # (CPU, Motherboard, Memory, Storage, GPU, Case, PSU, CPU Cooler)
 
+
 parameter_List = startMenu()
+
+
 for lists in parameter_List:
     compList = budget_Formula.giveFormula(lists[0], lists[1])
     pcpp_Filter.grabBuilds(compList, lists, MASTER_LIST)
