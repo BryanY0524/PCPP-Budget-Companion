@@ -10,8 +10,7 @@ E-Sports has become a huge trend in recent years and the number of gamers, espec
 The initial motive of this project is to help people choose reasonable computer components within their budget according to their needs. The program should give the user an overview of potential combinations of hardware they could buy, and how much each component would cost. 
 
 # How we achieved our objectives
-Bryan started off by creating dictionaries for the budget, where each contains an identifier and the corresponding allocation of the budget to each component in percentage. This would allow the budget allocated to each component dynamically changes according to different budget price-bracket, and different type of computer the user wants to build. \
-●	For example, for a $1500 Build, the budget allocated to the CPU would be 25% for gaming PC, and 28% for workstation PC; similarly for a $2500 gaming PC, 22% of the budget would be allocated to the CPU.
+Bryan started off by creating dictionaries for the budget, where each contains an identifier and the corresponding allocation of the budget to each component in percentage. This would allow the budget allocated to each component dynamically changes according to different budget price-bracket, and different type of computer the user wants to build. For example, for a $1500 Build, the budget allocated to the CPU would be 25% for gaming PC, and 28% for workstation PC; similarly for a $2500 gaming PC, 22% of the budget would be allocated to the CPU.
 
 In order to access the budget dictionary, Jimmy implemented a user interface that allows the user to customize and select their parameters and budget. The parameters and the budget list will then correspond with a locally stored JSON file that contains all essential computer component products to create lists of components to choose from. This saves memory and time overhead since the PCPartPicker API is not utilized in every start-up.
 
